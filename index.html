@@ -395,6 +395,7 @@ const CFG = {
   N8N_SAVE_PRED:   "https://n8n.openip.cl/webhook/cm-save-pred",
   N8N_GET_PREDS:   "https://n8n.openip.cl/webhook/cm-get-preds",
   N8N_LEADERBOARD: "https://n8n.openip.cl/webhook/cm-leaderboard",
+  SHEET_RESULTS_URL: "https://docs.google.com/spreadsheets/d/1pkrrldqILsMG_XbIl29PMZzNq5RXxZX6EzEyN7bFEck/gviz/tq?tqx=out:csv&sheet=Resultados",
   WC_COMPETITION: "WC",
   WC_SEASON: 2026,
   VALID_DOMAINS: ["apprecio.com","apprecio.pe","apprecio.co","apprecio.mx","apprecio.cl","apprecio.es"],
@@ -503,6 +504,7 @@ async function loadMatches(){
     if(CFG.FOOTBALL_API_KEY==="3ff849c2652846ce9a9b31910ab7cb98"){
       allMatches=demoMatches();
       document.getElementById("syncLbl").innerHTML="Fixture provisional <button class=\"refresh-btn\" onclick=\"loadMatches()\">↻ Actualizar</button>";
+      await mergeResults();
     } else {
       const r=await fetch(`https://api.football-data.org/v4/competitions/${CFG.WC_COMPETITION}/matches?season=${CFG.WC_SEASON}`,{headers:{"X-Auth-Token":CFG.FOOTBALL_API_KEY}});
       // Respect rate limit headers as recommended by football-data.org
@@ -521,6 +523,8 @@ async function loadMatches(){
       }));
       const now=new Date();
       document.getElementById("syncLbl").innerHTML=`Actualizado ${now.toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"})} <button class="refresh-btn" onclick="loadMatches()">↻</button>`;
+      // Merge real results from Sheet
+      await mergeResults();
     }
   }catch(e){allMatches=demoMatches();console.error(e);}
   document.getElementById("fixtureLoad").style.display="none";
@@ -564,6 +568,34 @@ async function savePrediction(matchId,fromHome=false){
     renderHome();renderTabla();
     if(!fromHome)renderFixture();
   }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
+}
+
+
+async function mergeResults(){
+  // Read results from Google Sheet (written by n8n every hour)
+  try{
+    const r = await fetch(CFG.SHEET_RESULTS_URL);
+    const txt = await r.text();
+    if(!txt || txt.trim()==='') return;
+    const lines = txt.trim().split('\n');
+    if(lines.length < 2) return;
+    const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());
+    const rows = lines.slice(1).map(line=>{
+      const vals = line.match(/(".*?"|[^,]+)/g)||[];
+      const obj={};
+      headers.forEach((h,i)=>{ obj[h]=(vals[i]||'').replace(/"/g,'').trim(); });
+      return obj;
+    });
+    // Merge into allMatches
+    rows.forEach(r=>{
+      if(!r.match_id || r.home_score==='' || r.away_score==='') return;
+      const m = allMatches.find(m=>String(m.id)===String(r.match_id));
+      if(m){
+        m.status = 'FINISHED';
+        m.score = { fullTime: { home: parseInt(r.home_score), away: parseInt(r.away_score) } };
+      }
+    });
+  }catch(e){ console.warn('Results merge error', e); }
 }
 
 function renderHome(){
