@@ -673,7 +673,7 @@ function renderHome(){
     });
   }
 
-  if(!finished.length&&!upcoming.length){
+  if(!finished.length&&!pending.length&&!saved.length){
     h+=`<div class="empty"><div class="ic">⚽</div><p>Los partidos se cargarán próximamente.</p></div>`;
   }
   el.innerHTML=h;
