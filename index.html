@@ -689,15 +689,10 @@ function renderFixture(){
   const el=document.getElementById("fixtureContent");
   if(!allMatches.length){el.innerHTML=`<div class="empty"><div class="ic">📅</div><p>Cargando partidos...</p></div>`;return;}
   const email=user.email;
-  const now=new Date();
 
-  // Show only upcoming/open matches — upcoming first, then if none, show all
-  const openMatches=allMatches.filter(m=>isMatchOpen(m));
-  const finishedMatches=allMatches.filter(m=>m.status==="FINISHED");
-
+  // Group ALL matches by group
   const groups={};
-  // Show open matches first
-  openMatches.forEach(m=>{
+  allMatches.forEach(m=>{
     const k=m.group||m.stage||"Partidos";
     if(!groups[k])groups[k]=[];
     groups[k].push(m);
@@ -705,73 +700,104 @@ function renderFixture(){
 
   let h="";
 
-  if(openMatches.length){
-    h+=`<div style="font-size:12px;color:#aaa;margin-bottom:12px;">Mostrando partidos abiertos para pronóstico · ${openMatches.length} partidos</div>`;
-    Object.entries(groups).forEach(([phase,matches])=>{
-      h+=`<div class="phase-lbl">${phase.replace(/_/g," ")}</div>`;
-      matches.forEach(m=>{
-        const pred=allPreds[email]?.[m.id];
-        const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
-        const alreadySaved=!!pred;
-        h+=`<div class="match-card ${alreadySaved?"":"highlight"}">
+  Object.entries(groups).forEach(([phase,matches])=>{
+    h+=`<div class="phase-lbl">${phase.replace(/_/g," ")}</div>`;
+    matches.forEach(m=>{
+      const pred=allPreds[email]?.[m.id];
+      const real=m.score?.fullTime;
+      const isFinished=m.status==="FINISHED";
+      const isOpen=isMatchOpen(m);
+      const alreadySaved=!!pred;
+      const pts=pred&&real!=null?calcPts(pred,{home:real.home,away:real.away}):null;
+      const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
+
+      if(isFinished){
+        // Estado: Finalizado — muestra resultado real + mi pronóstico + puntos
+        h+=`<div class="match-card">
           <div class="match-meta">
             <span class="match-date">${dStr}</span>
             <div class="badges">
-              <span class="badge badge-open">Abierto</span>
-              ${alreadySaved?`<span class="pts-chip" style="background:#E8F5E9;color:#2E7D32;">✓ Guardado</span>`:""}
+              <span class="badge badge-played">✓ Finalizado</span>
+              ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"🎯 +3":pts===1?"✓ +1":"✗ 0"}</span>`:""}
             </div>
           </div>
           <div class="match-row">
             <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
-            <div class="score-block">
-              <input type="number" class="score-inp" id="ph_${m.id}" min="0" max="20"
-                value="${pred?pred.home:""}" placeholder="-" ${alreadySaved?"disabled":""}>
-              <span class="sep">:</span>
-              <input type="number" class="score-inp" id="pa_${m.id}" min="0" max="20"
-                value="${pred?pred.away:""}" placeholder="-" ${alreadySaved?"disabled":""}>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${real?.home??"-"} : ${real?.away??"-"}</span>
+              <span style="font-size:10px;color:#aaa;">resultado final</span>
             </div>
             <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
           </div>
           <div class="match-foot">
-            ${alreadySaved
-              ?`<span style="font-size:11px;color:#aaa">🔒 Pronóstico definitivo: ${pred.home} : ${pred.away}</span>`
-              :`<span style="font-size:11px;color:#aaa">Tu pronóstico</span><button class="btn-save" onclick="savePrediction(${m.id})">Guardar</button>`
-            }
+            <span style="font-size:12px;color:#aaa;">${pred?`Mi pronóstico: <strong style="color:var(--dark)">${pred.home} : ${pred.away}</strong>`:"Sin pronóstico"}</span>
+            ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"Exacto +3pts":pts===1?"Ganador +1pt":"Sin puntos"}</span>`:""}
           </div>
         </div>`;
-      });
-    });
-  }
-
-  // Finished matches section
-  if(finishedMatches.length){
-    h+=`<div class="phase-lbl" style="margin-top:20px;">✅ Partidos finalizados</div>`;
-    finishedMatches.slice().reverse().forEach(m=>{
-      const pred=allPreds[email]?.[m.id];
-      const real=m.score?.fullTime;
-      const pts=pred&&real!=null?calcPts(pred,{home:real.home,away:real.away}):null;
-      const dStr=m.date?new Date(m.date).toLocaleDateString("es",{day:"numeric",month:"short"}):m.dateLabel||"";
-      h+=`<div class="match-card">
-        <div class="match-meta">
-          <span class="match-date">${dStr} — ${m.group||""}</span>
-          <div class="badges">
-            <span class="badge badge-played">✓ Finalizado</span>
-            ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"+3":pts===1?"+1":"0"}</span>`:""}
+      } else if(isOpen && alreadySaved){
+        // Estado: Abierto + pronóstico guardado — bloqueado, muestra predicción
+        h+=`<div class="match-card">
+          <div class="match-meta">
+            <span class="match-date">${dStr}</span>
+            <div class="badges">
+              <span class="badge badge-open">Pendiente</span>
+              <span class="pts-chip" style="background:#E8F5E9;color:#2E7D32;">✓ Guardado</span>
+            </div>
           </div>
-        </div>
-        <div class="match-row">
-          <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--dark)">${real?.home??"-"} : ${real?.away??"-"}</span>
-            <span style="font-size:10px;color:#bbb;">${pred?`Mi pred: ${pred.home}:${pred.away}`:"Sin pronóstico"}</span>
+          <div class="match-row">
+            <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${pred.home} : ${pred.away}</span>
+              <span style="font-size:10px;color:#aaa;">tu pronóstico</span>
+            </div>
+            <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
           </div>
-          <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
-        </div>
-      </div>`;
+          <div class="match-foot"><span style="font-size:11px;color:#aaa;">🔒 No se puede modificar</span></div>
+        </div>`;
+      } else if(isOpen && !alreadySaved){
+        // Estado: Abierto + sin pronóstico — puede ingresar
+        h+=`<div class="match-card highlight">
+          <div class="match-meta">
+            <span class="match-date">${dStr}</span>
+            <span class="badge badge-open">⚠️ Falta tu pronóstico</span>
+          </div>
+          <div class="match-row">
+            <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
+            <div class="score-block">
+              <input type="number" class="score-inp" id="ph_${m.id}" min="0" max="20" placeholder="-">
+              <span class="sep">:</span>
+              <input type="number" class="score-inp" id="pa_${m.id}" min="0" max="20" placeholder="-">
+            </div>
+            <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
+          </div>
+          <div class="match-foot">
+            <span style="font-size:11px;color:#aaa">Tu pronóstico</span>
+            <button class="btn-save" onclick="savePrediction(${m.id})">Guardar</button>
+          </div>
+        </div>`;
+      } else {
+        // Estado: Cerrado sin pronóstico — partido iniciado sin predicción
+        h+=`<div class="match-card">
+          <div class="match-meta">
+            <span class="match-date">${dStr}</span>
+            <div class="badges">
+              <span class="badge badge-locked">En juego / Cerrado</span>
+              <span class="pts-chip pts-miss">✗ 0 pts</span>
+            </div>
+          </div>
+          <div class="match-row">
+            <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <span style="font-size:13px;color:#aaa;">Sin pronóstico</span>
+            </div>
+            <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
+          </div>
+        </div>`;
+      }
     });
-  }
+  });
 
-  if(!openMatches.length&&!finishedMatches.length){
+  if(!allMatches.length){
     h=`<div class="empty"><div class="ic">📅</div><p>No hay partidos disponibles aún.</p></div>`;
   }
 
