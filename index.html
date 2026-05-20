@@ -548,6 +548,7 @@ async function savePrediction(matchId,fromHome=false){
   const home=document.getElementById(`ph${sfx}_${matchId}`)?.value;
   const away=document.getElementById(`pa${sfx}_${matchId}`)?.value;
   if(home===""||home===undefined||away===""||away===undefined){toast("⚠️ Ingresa ambos marcadores");return;}
+  if(allPreds[user.email]?.[matchId]){toast("🔒 Ya guardaste este pronóstico, no se puede modificar");return;}
   const matchDate=allMatches.find(m=>m.id==matchId)?.date||new Date('2099-01-01').toISOString();
   try{
     const res=await fetch(CFG.N8N_SAVE_PRED,{
@@ -621,17 +622,18 @@ function renderHome(){
     });
   }
 
-  // Próximos partidos sin pronóstico
   const now=new Date();
-  const upcoming=allMatches.filter(m=>{
+  const openMatches=allMatches.filter(m=>{
     const notStarted=m.status==="TIMED"||m.status==="SCHEDULED"||m.status==="demo-open";
     const hasDate=m.date?new Date(m.date)>now:true;
-    return (notStarted||hasDate)&&!allPreds[email]?.[m.id]&&m.status!=="FINISHED";
-  }).slice(0,3);
+    return (notStarted||hasDate)&&m.status!=="FINISHED";
+  });
 
-  if(upcoming.length){
+  // Partidos sin pronóstico aún
+  const pending=openMatches.filter(m=>!allPreds[email]?.[m.id]).slice(0,3);
+  if(pending.length){
     h+=`<div class="phase-lbl">⚠️ Faltan tus pronósticos</div>`;
-    upcoming.forEach(m=>{
+    pending.forEach(m=>{
       const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
       h+=`<div class="match-card highlight">
         <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Abierto</span></div>
@@ -645,6 +647,28 @@ function renderHome(){
           <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
         </div>
         <div class="match-foot"><span></span><button class="btn-save" onclick="savePrediction(${m.id},true)">Guardar pronóstico</button></div>
+      </div>`;
+    });
+  }
+
+  // Partidos con pronóstico guardado (aún no jugados)
+  const saved=openMatches.filter(m=>allPreds[email]?.[m.id]).slice(0,5);
+  if(saved.length){
+    h+=`<div class="phase-lbl">🔒 Pronósticos guardados</div>`;
+    saved.forEach(m=>{
+      const pred=allPreds[email][m.id];
+      const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
+      h+=`<div class="match-card">
+        <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Pendiente</span></div>
+        <div class="match-row">
+          <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${pred.home} : ${pred.away}</span>
+            <span style="font-size:10px;color:#aaa;">tu pronóstico</span>
+          </div>
+          <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
+        </div>
+        <div class="match-foot"><span style="font-size:11px;color:#aaa;">🔒 No se puede modificar</span></div>
       </div>`;
     });
   }
