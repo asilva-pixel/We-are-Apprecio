@@ -482,6 +482,8 @@ async function doLogin(){
     document.getElementById("appScreen").style.display="flex";
     document.getElementById("appScreen").style.flexDirection="column";
     renderHome();renderPremios();
+    // Auto-refresh results every 5 minutes
+    setInterval(async()=>{ await mergeResults(); renderHome(); renderFixture(); renderTabla(); }, 5*60*1000);
   }catch(e){
     errEl.textContent="Error inesperado: "+e.message;
     console.error("Login error:",e);
@@ -891,7 +893,8 @@ function switchTab(name){
   });
   document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
   document.getElementById("panel-"+name).classList.add("active");
-  if(name==="tabla")renderTabla();
+  if(name==="tabla"){mergeResults().then(()=>renderTabla());}
+  if(name==="fixture"){mergeResults().then(()=>renderFixture());}
   if(name==="fixture"&&!allMatches.length)loadMatches();
 }
 
