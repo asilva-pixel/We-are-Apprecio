@@ -535,14 +535,20 @@ async function savePrediction(matchId,fromHome=false){
   const home=document.getElementById(`ph${sfx}_${matchId}`)?.value;
   const away=document.getElementById(`pa${sfx}_${matchId}`)?.value;
   if(home===""||home===undefined||away===""||away===undefined){toast("⚠️ Ingresa ambos marcadores");return;}
-  if(!allPreds[user.email])allPreds[user.email]={};
-  allPreds[user.email][matchId]={home,away};
-  if(!CFG.N8N_SAVE_PRED.includes("TU_N8N")){
-    fetch(CFG.N8N_SAVE_PRED,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,timestamp:new Date().toISOString()})}).catch(()=>{});
-  }
-  toast("✅ Pronóstico guardado");
-  renderHome();renderTabla();
-  if(!fromHome)renderFixture();
+  const matchDate=allMatches.find(m=>m.id==matchId)?.date||new Date('2099-01-01').toISOString();
+  try{
+    const res=await fetch(CFG.N8N_SAVE_PRED,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,timestamp:new Date().toISOString(),match_date:matchDate})
+    });
+    const data=await res.json();
+    if(!data.ok){toast("⚠️ "+(data.error||"No se pudo guardar"));return;}
+    if(!allPreds[user.email])allPreds[user.email]={};
+    allPreds[user.email][matchId]={home,away};
+    toast("✅ Guardado — el pronóstico no se puede modificar");
+    renderHome();renderTabla();
+    if(!fromHome)renderFixture();
+  }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
 }
 
 function renderHome(){
