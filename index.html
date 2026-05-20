@@ -531,7 +531,9 @@ async function loadPredictions(){
   if(!user)return;
   try{
     const r = await fetch(`${CFG.N8N_GET_PREDS}?email=${encodeURIComponent(user.email)}`);
-    const data = await r.json();
+    const txt = await r.text();
+    if(!txt) return;
+    const data = JSON.parse(txt);
     if(data.ok && data.predictions){
       if(!allPreds[user.email]) allPreds[user.email]={};
       data.predictions.forEach(p => {
@@ -552,7 +554,8 @@ async function savePrediction(matchId,fromHome=false){
       method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,timestamp:new Date().toISOString(),match_date:matchDate})
     });
-    const data=await res.json();
+    let data={ok:true};
+    try{ const txt=await res.text(); if(txt) data=JSON.parse(txt); }catch(e){}
     if(!data.ok){toast("⚠️ "+(data.error||"No se pudo guardar"));return;}
     if(!allPreds[user.email])allPreds[user.email]={};
     allPreds[user.email][matchId]={home,away};
