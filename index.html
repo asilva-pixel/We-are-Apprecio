@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com; connect-src 'self' https://n8n.openip.cl https://api.football-data.org;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>We Are Apprecio — Conexión Mundialera 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -330,10 +329,12 @@ body::before{
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-logo">
-    <img src="https://raw.githubusercontent.com/asilva-pixel/We-are-Apprecio/main/apprecio_logo.png" alt="Apprecio">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:24px;padding:6px 16px;">
+      <span style="color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.02em;">apprecio</span>
+    </div>
   </div>
   <div class="login-hero">
-    <div class="eyebrow">⚽ Mundial 2026</div>
+    <img src="https://raw.githubusercontent.com/asilva-pixel/We-are-Apprecio/main/wc2026.png" alt="FIFA World Cup 2026" style="height:160px;width:auto;margin-bottom:16px;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4));">
     <h1>WE ARE<br>APPRECIO</h1>
     <p>Un Mundial para compartir, disfrutar y celebrar.</p>
   </div>
@@ -453,27 +454,42 @@ async function doLogin(){
   if(!CFG.VALID_DOMAINS.includes(domain)){errEl.textContent="Solo cuentas @apprecio. Contacta a tu equipo de Cultura si crees que es un error.";return;}
   btn.style.opacity="0.7";btn.innerHTML="<span>Cargando...</span>";
   try{
-    // Login via n8n — el Sheet nunca se expone al browser
-    const loginRes = await fetch(CFG.N8N_LOGIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
-    });
-    const loginData = await loginRes.json();
-    if(!loginData.ok){ errEl.textContent = loginData.error || "Error al iniciar sesión."; btn.style.opacity="1"; btn.innerHTML="<span>Entrar</span><span>→</span>"; return; }
+    let loginData;
+    try{
+      const loginRes = await fetch(CFG.N8N_LOGIN, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+        mode: "cors"
+      });
+      if(!loginRes.ok && loginRes.status===0){throw new Error("CORS blocked");}
+      loginData = await loginRes.json();
+    }catch(fetchErr){
+      // If n8n is unreachable, show specific message
+      console.error("Fetch error:", fetchErr);
+      errEl.textContent="No se pudo conectar con el servidor. Verifica tu conexión o contacta soporte.";
+      btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
+      return;
+    }
+    if(!loginData.ok){
+      errEl.textContent = loginData.error || "Error al iniciar sesión.";
+      btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
+      return;
+    }
     allUsers[email] = { email, nombre: loginData.nombre, pais: loginData.pais };
     user = allUsers[email];
     await loadPredictions();
     await loadMatches();
     document.getElementById("navName").textContent=user.nombre||email.split("@")[0];
     document.getElementById("navFlag").textContent=FLAGS[user.pais]||"🌍";
-    // Fix nav logo — use full base64
-    document.querySelectorAll(".nav-logo img").forEach(img=>img.src="https://raw.githubusercontent.com/asilva-pixel/We-are-Apprecio/main/apprecio_logo.png");
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("appScreen").style.display="flex";
     document.getElementById("appScreen").style.flexDirection="column";
     renderHome();renderPremios();
-  }catch(e){errEl.textContent="Error al conectar. Intenta de nuevo.";console.error(e);}
+  }catch(e){
+    errEl.textContent="Error inesperado: "+e.message;
+    console.error("Login error:",e);
+  }
   btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
 }
 
@@ -748,6 +764,6 @@ function demoMatches(){
     {id:10,dateLabel:"19 Jun, 18:00",stage:"GRUPO E",group:"Grupo E",homeTeam:"Brasil",awayTeam:"España",homeFlag:"🇧🇷",awayFlag:"🇪🇸",status:"demo-open",score:{}},
   ];
 }
-<\/script>
+</script>
 </body>
 </html>
