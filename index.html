@@ -395,7 +395,8 @@ const CFG = {
   N8N_SAVE_PRED:   "https://n8n.openip.cl/webhook/cm-save-pred",
   N8N_GET_PREDS:   "https://n8n.openip.cl/webhook/cm-get-preds",
   N8N_LEADERBOARD: "https://n8n.openip.cl/webhook/cm-leaderboard",
-  SHEET_RESULTS_URL: "https://docs.google.com/spreadsheets/d/1pkrrldqILsMG_XbIl29PMZzNq5RXxZX6EzEyN7bFEck/gviz/tq?tqx=out:csv&sheet=Resultados",
+  N8N_RESULTS:     "https://n8n.openip.cl/webhook/cm-results",
+
   WC_COMPETITION: "WC",
   WC_SEASON: 2026,
   VALID_DOMAINS: ["apprecio.com","apprecio.pe","apprecio.co","apprecio.mx","apprecio.cl","apprecio.es"],
@@ -574,27 +575,19 @@ async function savePrediction(matchId,fromHome=false){
 
 
 async function mergeResults(){
-  // Read results from Google Sheet (written by n8n every hour)
+  // Read results via n8n webhook — Sheet is private, never exposed
   try{
-    const r = await fetch(CFG.SHEET_RESULTS_URL);
+    const r = await fetch(CFG.N8N_RESULTS);
     const txt = await r.text();
-    if(!txt || txt.trim()==='') return;
-    const lines = txt.trim().split('\n');
-    if(lines.length < 2) return;
-    const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());
-    const rows = lines.slice(1).map(line=>{
-      const vals = line.match(/(".*?"|[^,]+)/g)||[];
-      const obj={};
-      headers.forEach((h,i)=>{ obj[h]=(vals[i]||'').replace(/"/g,'').trim(); });
-      return obj;
-    });
-    // Merge into allMatches
-    rows.forEach(r=>{
-      if(!r.match_id || r.home_score==='' || r.away_score==='') return;
-      const m = allMatches.find(m=>String(m.id)===String(r.match_id));
+    if(!txt) return;
+    const data = JSON.parse(txt);
+    if(!data.ok || !data.results) return;
+    data.results.forEach(res=>{
+      if(!res.match_id || res.home_score==='' || res.away_score==='') return;
+      const m = allMatches.find(m=>String(m.id)===String(res.match_id));
       if(m){
         m.status = 'FINISHED';
-        m.score = { fullTime: { home: parseInt(r.home_score), away: parseInt(r.away_score) } };
+        m.score = { fullTime: { home: parseInt(res.home_score), away: parseInt(res.away_score) } };
       }
     });
   }catch(e){ console.warn('Results merge error', e); }
