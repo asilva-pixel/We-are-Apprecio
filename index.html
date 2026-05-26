@@ -321,6 +321,65 @@ body::before{
   .tname{font-size:12px;}
   .score-inp{width:38px;height:38px;font-size:16px;}
 }
+
+/* ── BRACKET ── */
+.bracket-stage { margin-bottom: 28px; }
+.bracket-stage-title {
+  font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--dark);
+  margin-bottom:12px; padding-bottom:8px;
+  border-bottom:2px solid var(--red); display:flex; align-items:center; gap:8px;
+}
+.bracket-grid { display:grid; gap:8px; }
+.bracket-grid-2 { grid-template-columns: repeat(2,1fr); }
+.bracket-grid-4 { grid-template-columns: repeat(2,1fr); }
+.bracket-grid-8 { grid-template-columns: repeat(2,1fr); }
+@media(min-width:600px){
+  .bracket-grid-4 { grid-template-columns: repeat(4,1fr); }
+  .bracket-grid-8 { grid-template-columns: repeat(4,1fr); }
+}
+.bracket-match {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius-sm); overflow:hidden;
+  transition:box-shadow 0.2s;
+}
+.bracket-match:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+.bracket-match.locked { opacity:0.6; }
+.bracket-match.has-pred { border-color:#45C1AD; }
+.bracket-team {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 12px; border-bottom:1px solid var(--border);
+  font-size:13px; font-weight:600; color:var(--dark);
+  min-height:38px;
+}
+.bracket-team:last-of-type { border-bottom:none; }
+.bracket-team.tbd { color:#aaa; font-weight:400; font-style:italic; }
+.bracket-team.winner { background:var(--green-light); color:var(--green-dark); }
+.bracket-score {
+  font-family:'Bebas Neue',sans-serif; font-size:18px;
+  color:var(--dark); min-width:20px; text-align:center;
+}
+.bracket-pred-area {
+  background:#FAFAFA; border-top:1px solid var(--border);
+  padding:8px 12px; display:flex; align-items:center;
+  justify-content:space-between; gap:8px;
+}
+.bracket-score-inp {
+  width:34px; height:34px; text-align:center;
+  border:1px solid var(--border); border-radius:6px;
+  font-size:16px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif;
+  background:white; color:var(--dark); outline:none;
+}
+.bracket-score-inp:focus { border-color:var(--red); }
+.bracket-score-inp:disabled { background:#F5F5F5; color:#ccc; }
+.bracket-save-btn {
+  background:var(--red); color:white; border:none;
+  padding:5px 12px; border-radius:6px;
+  font-size:11px; font-weight:700; cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.bracket-save-btn:hover { background:var(--red-dark); }
+.bracket-date { font-size:10px; color:#aaa; padding:5px 12px; }
+.bracket-pts { font-size:10px; font-weight:700; padding:4px 8px; border-radius:20px; }
 </style>
 </head>
 <body>
@@ -365,6 +424,7 @@ body::before{
     <button class="tab-btn active" onclick="switchTab('home')">🏠 Inicio</button>
     <button class="tab-btn" onclick="switchTab('fixture')">📅 Partidos</button>
     <button class="tab-btn" onclick="switchTab('tabla')">🏆 Tabla</button>
+    <button class="tab-btn" onclick="switchTab('bracket')">🏆 Bracket</button>
     <button class="tab-btn" onclick="switchTab('premios')">🎁 Premios</button>
   </div>
   <div class="app-body">
@@ -379,7 +439,11 @@ body::before{
         <div class="sec-head"><h2>TABLA DE POSICIONES</h2><span>Top 10</span></div>
         <div id="tablaContent"></div>
       </div>
-      <div class="tab-panel" id="panel-premios">
+      <div class="tab-panel" id="panel-bracket">
+      <div class="sec-head"><h2>FASE ELIMINATORIA</h2><span id="bracketSync"></span></div>
+      <div id="bracketContent"></div>
+    </div>
+    <div class="tab-panel" id="panel-premios">
         <div class="sec-head"><h2>PREMIOS & REGLAS</h2></div>
         <div id="premiosContent"></div>
       </div>
@@ -396,6 +460,7 @@ const CFG = {
   N8N_GET_PREDS:   "https://n8n.openip.cl/webhook/cm-get-preds",
   N8N_LEADERBOARD: "https://n8n.openip.cl/webhook/cm-leaderboard",
   N8N_RESULTS:     "https://n8n.openip.cl/webhook/cm-results",
+  N8N_KNOCKOUT:    "https://n8n.openip.cl/webhook/cm-knockout",
 
   WC_COMPETITION: "WC",
   WC_SEASON: 2026,
@@ -573,6 +638,179 @@ async function savePrediction(matchId,fromHome=false){
   }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
 }
 
+
+
+// ═══════════════════════════════════════
+// BRACKET — FASE ELIMINATORIA
+// ═══════════════════════════════════════
+let knockoutMatches = [];
+let knockoutPreds = {};
+
+const KNOCKOUT_STAGES = [
+  { id:'R16',   label:'Octavos de Final',   slots:16, cols:'bracket-grid-8' },
+  { id:'QF',    label:'Cuartos de Final',   slots:8,  cols:'bracket-grid-4' },
+  { id:'SF',    label:'Semifinales',        slots:4,  cols:'bracket-grid-2' },
+  { id:'3RD',   label:'Tercer y Cuarto Lugar', slots:2, cols:'bracket-grid-2' },
+  { id:'FINAL', label:'Gran Final',         slots:2,  cols:'bracket-grid-2' },
+];
+
+async function loadBracket(){
+  document.getElementById('bracketSync').innerHTML='<span style="font-size:11px;color:#aaa;">Cargando...</span>';
+  try{
+    const r = await fetch(CFG.N8N_KNOCKOUT);
+    const txt = await r.text();
+    if(txt){
+      const data = JSON.parse(txt);
+      if(data.ok && data.matches) knockoutMatches = data.matches;
+    }
+  }catch(e){ console.warn('Knockout load error', e); }
+
+  // Load knockout predictions
+  try{
+    const r = await fetch(`${CFG.N8N_GET_PREDS}?email=${encodeURIComponent(user.email)}&type=knockout`);
+    const txt = await r.text();
+    if(txt){
+      const data = JSON.parse(txt);
+      if(data.ok && data.predictions){
+        data.predictions.forEach(p=>{
+          knockoutPreds[p.match_id] = { home: p.home_pred, away: p.away_pred };
+        });
+      }
+    }
+  }catch(e){ console.warn('Knockout preds load error', e); }
+
+  document.getElementById('bracketSync').innerHTML=
+    `<button class="refresh-btn" onclick="loadBracket()">↻ Actualizar</button>`;
+  renderBracket();
+}
+
+function renderBracket(){
+  const el = document.getElementById('bracketContent');
+  const email = user.email;
+
+  if(!knockoutMatches.length){
+    el.innerHTML=`<div class="empty">
+      <div class="ic">🏆</div>
+      <p style="margin-bottom:8px;">La fase eliminatoria comienza el <strong>27 de junio</strong>.</p>
+      <p style="font-size:12px;color:#aaa;">Los clasificados se llenarán automáticamente cuando terminen los grupos.</p>
+    </div>`;
+    return;
+  }
+
+  let h = '';
+  KNOCKOUT_STAGES.forEach(stage=>{
+    const matches = knockoutMatches.filter(m=>m.stage===stage.id);
+    if(!matches.length) return;
+
+    h += `<div class="bracket-stage">
+      <div class="bracket-stage-title">⚽ ${stage.label}</div>
+      <div class="bracket-grid ${stage.cols}">`;
+
+    matches.forEach(m=>{
+      const pred = knockoutPreds[m.id];
+      const isFinished = m.status==='FINISHED';
+      const isOpen = m.home_team && m.away_team && m.status!=='FINISHED' &&
+                     (m.match_date ? new Date(m.match_date) > new Date() : true);
+      const isTBD = !m.home_team || !m.away_team;
+      const pts = pred && isFinished ? calcPts(pred,{home:m.home_score,away:m.away_score}) : null;
+      const dStr = m.match_date ?
+        new Date(m.match_date).toLocaleDateString('es',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+
+      h += `<div class="bracket-match ${isTBD?'locked':''} ${pred&&!isFinished?'has-pred':''}">`;
+
+      // Home team row
+      h += `<div class="bracket-team ${isTBD&&!m.home_team?'tbd':''} ${isFinished&&m.home_score>m.away_score?'winner':''}">
+        <span>${m.home_team||'Por definir'}</span>
+        ${isFinished?`<span class="bracket-score">${m.home_score}</span>`:''}
+      </div>`;
+
+      // Away team row
+      h += `<div class="bracket-team ${isTBD&&!m.away_team?'tbd':''} ${isFinished&&m.away_score>m.home_score?'winner':''}">
+        <span>${m.away_team||'Por definir'}</span>
+        ${isFinished?`<span class="bracket-score">${m.away_score}</span>`:''}
+      </div>`;
+
+      // Date
+      if(dStr) h += `<div class="bracket-date">${dStr}</div>`;
+
+      // Prediction area
+      if(isOpen){
+        h += `<div class="bracket-pred-area">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" class="bracket-score-inp" id="ko_h_${m.id}" min="0" max="20"
+              value="${pred?pred.home:''}" placeholder="-">
+            <span style="color:#ddd;font-size:16px;">:</span>
+            <input type="number" class="bracket-score-inp" id="ko_a_${m.id}" min="0" max="20"
+              value="${pred?pred.away:''}" placeholder="-">
+          </div>
+          <button class="bracket-save-btn" onclick="saveKnockoutPred('${m.id}','${m.match_date||''}')">
+            ${pred?'Actualizar':'Guardar'}
+          </button>
+        </div>`;
+      } else if(isFinished && pred){
+        h += `<div class="bracket-pred-area">
+          <span style="font-size:11px;color:#aaa;">Mi pronóstico: <strong style="color:var(--dark)">${pred.home}:${pred.away}</strong></span>
+          ${pts!==null?`<span class="bracket-pts ${pts===3?'pts-exact':pts===1?'pts-winner':'pts-miss'}">${pts===3?'🎯 +3':pts===1?'✓ +1':'✗ 0'}</span>`:''}
+        </div>`;
+      } else if(isFinished && !pred){
+        h += `<div class="bracket-pred-area">
+          <span style="font-size:11px;color:#aaa;">Sin pronóstico</span>
+          <span class="bracket-pts pts-miss">✗ 0</span>
+        </div>`;
+      } else if(isTBD){
+        h += `<div class="bracket-pred-area">
+          <span style="font-size:11px;color:#aaa;">Se habilitará cuando se conozcan los equipos</span>
+        </div>`;
+      }
+
+      h += `</div>`;
+    });
+
+    h += `</div></div>`;
+  });
+
+  el.innerHTML = h;
+}
+
+async function saveKnockoutPred(matchId, matchDate){
+  const home = document.getElementById(`ko_h_${matchId}`)?.value;
+  const away = document.getElementById(`ko_a_${matchId}`)?.value;
+  if(home===''||away===''){toast('⚠️ Ingresa ambos marcadores');return;}
+  try{
+    const res = await fetch(CFG.N8N_SAVE_PRED, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        email: user.email,
+        match_id: matchId,
+        home_pred: home,
+        away_pred: away,
+        timestamp: new Date().toISOString(),
+        match_date: matchDate || new Date('2099-01-01').toISOString(),
+        type: 'knockout'
+      })
+    });
+    let data={ok:true};
+    try{ const txt=await res.text(); if(txt) data=JSON.parse(txt); }catch(e){}
+    if(!data.ok){toast('⚠️ '+(data.error||'No se pudo guardar'));return;}
+    knockoutPreds[matchId] = {home, away};
+    toast('✅ Pronóstico guardado');
+    renderBracket();
+  }catch(e){toast('⚠️ Error al guardar');console.error(e);}
+}
+
+// Include knockout pts in total
+const _getUserPtsOrig = getUserPts;
+function getUserPts(email){
+  let pts = _getUserPtsOrig(email);
+  // Add knockout pts
+  knockoutMatches.forEach(m=>{
+    const pred = (email===user?.email ? knockoutPreds : {})[m.id];
+    if(pred && m.status==='FINISHED'){
+      pts += calcPts(pred,{home:m.home_score,away:m.away_score})||0;
+    }
+  });
+  return pts;
+}
 
 async function mergeResults(){
   // Read results via n8n webhook — Sheet is private, never exposed
@@ -891,6 +1129,7 @@ function switchTab(name){
   document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
   document.getElementById("panel-"+name).classList.add("active");
   if(name==="tabla"){mergeResults().then(()=>renderTabla());}
+  if(name==="bracket"){loadBracket();}
   if(name==="fixture"){mergeResults().then(()=>renderFixture());}
   if(name==="fixture"&&!allMatches.length)loadMatches();
 }
