@@ -555,7 +555,7 @@ async function savePrediction(matchId,fromHome=false){
   const home=document.getElementById(`ph${sfx}_${matchId}`)?.value;
   const away=document.getElementById(`pa${sfx}_${matchId}`)?.value;
   if(home===""||home===undefined||away===""||away===undefined){toast("⚠️ Ingresa ambos marcadores");return;}
-  if(allPreds[user.email]?.[matchId]){toast("🔒 Ya guardaste este pronóstico, no se puede modificar");return;}
+
   const matchDate=allMatches.find(m=>m.id==matchId)?.date||new Date('2099-01-01').toISOString();
   try{
     const res=await fetch(CFG.N8N_SAVE_PRED,{
@@ -567,7 +567,7 @@ async function savePrediction(matchId,fromHome=false){
     if(!data.ok){toast("⚠️ "+(data.error||"No se pudo guardar"));return;}
     if(!allPreds[user.email])allPreds[user.email]={};
     allPreds[user.email][matchId]={home,away};
-    toast("✅ Guardado — el pronóstico no se puede modificar");
+    toast("✅ Pronóstico guardado");
     renderHome();renderTabla();
     if(!fromHome)renderFixture();
   }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
@@ -681,21 +681,25 @@ function renderHome(){
   // Partidos con pronóstico guardado (aún no jugados)
   const saved=openMatches.filter(m=>allPreds[email]?.[m.id]).slice(0,5);
   if(saved.length){
-    h+=`<div class="phase-lbl">🔒 Pronósticos guardados</div>`;
+    h+=`<div class="phase-lbl">✅ Pronósticos guardados</div>`;
     saved.forEach(m=>{
       const pred=allPreds[email][m.id];
       const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
       h+=`<div class="match-card">
-        <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Pendiente</span></div>
+        <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Abierto</span></div>
         <div class="match-row">
           <div class="team-block"><span class="tname">${m.homeTeam}</span></div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${pred.home} : ${pred.away}</span>
-            <span style="font-size:10px;color:#aaa;">tu pronóstico</span>
+          <div class="score-block">
+            <input type="number" class="score-inp" id="ph_h_${m.id}" min="0" max="20" value="${pred.home}" placeholder="-">
+            <span class="sep">:</span>
+            <input type="number" class="score-inp" id="pa_h_${m.id}" min="0" max="20" value="${pred.away}" placeholder="-">
           </div>
           <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
         </div>
-        <div class="match-foot"><span style="font-size:11px;color:#aaa;">🔒 No se puede modificar</span></div>
+        <div class="match-foot">
+          <span style="font-size:11px;color:#aaa;">Puedes modificarlo hasta que inicie</span>
+          <button class="btn-save" onclick="savePrediction(${m.id},true)">Actualizar</button>
+        </div>
       </div>`;
     });
   }
@@ -779,7 +783,7 @@ function renderFixture(){
             </div>
             <div class="team-block away"><span class="tname">${m.awayTeam}</span></div>
           </div>
-          <div class="match-foot"><span style="font-size:11px;color:#aaa;">🔒 No se puede modificar</span></div>
+          <div class="match-foot"><span style="font-size:11px;color:#aaa;">Puedes modificarlo hasta que inicie el partido</span></div>
         </div>`;
       } else if(isOpen && !alreadySaved){
         // Estado: Abierto + sin pronóstico — puede ingresar
