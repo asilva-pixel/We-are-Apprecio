@@ -566,7 +566,7 @@ async function doLogin(){
     document.getElementById("appScreen").style.flexDirection="column";
     renderHome();renderPremios();
     // Auto-refresh results every 5 minutes
-    setInterval(async()=>{ await mergeResults(); renderHome(); renderFixture(); renderTabla(); }, 5*60*1000);
+    setInterval(async()=>{ await mergeResults(); renderHome(); renderFixture(); await renderTabla(); }, 5*60*1000);
   }catch(e){
     errEl.textContent="Error inesperado: "+e.message;
     console.error("Login error:",e);
@@ -613,7 +613,7 @@ async function loadMatches(){
     }
   }catch(e){allMatches=demoMatches();console.error(e);}
   document.getElementById("fixtureLoad").style.display="none";
-  renderFixture();renderHome();renderTabla();
+  renderFixture();renderHome();
 }
 
 async function loadPredictions(){
@@ -650,7 +650,7 @@ async function savePrediction(matchId,fromHome=false){
     if(!allPreds[user.email])allPreds[user.email]={};
     allPreds[user.email][matchId]={home,away};
     toast("✅ Pronóstico guardado");
-    renderHome();renderTabla();
+    renderHome();
     if(!fromHome)renderFixture();
   }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
 }
