@@ -1171,32 +1171,41 @@ function renderFixture(){
   el.innerHTML=h;
 }
 
-function renderTabla(){
+async function renderTabla(){
   const el=document.getElementById("tablaContent");
+  el.innerHTML=`<div class="empty"><div class="ic">⏳</div><p>Cargando tabla...</p></div>`;
+  let ranked=[];
+  try{
+    const r=await fetch(CFG.N8N_LEADERBOARD);
+    const txt=await r.text();
+    if(txt){const data=JSON.parse(txt);if(data.ok&&data.leaderboard)ranked=data.leaderboard;}
+  }catch(e){console.warn('Leaderboard error',e);}
+  if(!ranked.length){
+    el.innerHTML=`<div class="empty"><div class="ic">🏆</div><p>La tabla se mostrará cuando haya participantes con pronósticos.</p></div>`;
+    return;
+  }
   const email=user.email;
-  const emails=Object.keys(allUsers);
-  if(!emails.length){el.innerHTML=`<div class="empty"><div class="ic">🏆</div><p>La tabla se mostrará cuando haya participantes.</p></div>`;return;}
-  const ranked=emails.map((em,i)=>({
-    email:em,nombre:allUsers[em]?.nombre||em.split("@")[0],pais:allUsers[em]?.pais||"",pts:getUserPts(em),idx:i
-  })).sort((a,b)=>b.pts-a.pts).slice(0,10);
+  const countryFlags={Chile:"🇨🇱",Colombia:"🇨🇴","México":"🇲🇽","Perú":"🇵🇪","España":"🇪🇸"};
   const medals=["🥇","🥈","🥉"];
   let h=`<div class="podium">`;
   ranked.slice(0,3).forEach((u,i)=>{
-    h+=`<div class="pod-card ${i===0?"p1":""}"><div class="pod-medal">${medals[i]}</div><div class="pod-name">${u.nombre.split(" ")[0]}</div><div class="pod-pts">${u.pts}</div><div class="pod-sub">${FLAGS[u.pais]||""} pts</div></div>`;
+    h+=`<div class="pod-card ${i===0?"p1":""}"><div class="pod-medal">${medals[i]}</div><div class="pod-name">${u.nombre.split(" ")[0]}</div><div class="pod-pts">${u.pts}</div><div class="pod-sub">${countryFlags[u.pais]||""} pts</div></div>`;
   });
   h+=`</div><div class="lb-list">`;
   ranked.forEach((u,i)=>{
-    const isMe=u.email===email;
+    const isMe=user.nombre===u.nombre;
     const avClass=["","mint","lav","","mint","","lav"][i%7];
     h+=`<div class="lb-row ${isMe?"me":""}">
       <span class="lb-rank">${i+1}</span>
       <div class="lb-av ${avClass}">${initials(u.nombre)}</div>
-      <div class="lb-info"><div class="lb-name">${u.nombre}${isMe?" (tú)":""}</div><div class="lb-country">${FLAGS[u.pais]||""} ${COUNTRY[u.pais]||""}</div></div>
+      <div class="lb-info"><div class="lb-name">${u.nombre}${isMe?" (tú)":""}</div><div class="lb-country">${countryFlags[u.pais]||""} ${u.pais||""}</div></div>
       <div class="lb-pts">${u.pts}</div>
     </div>`;
   });
   h+=`</div>`;
   el.innerHTML=h;
+  // DEAD CODE REPLACED — original local calc below removed
+  const emails=Object.keys(allUsers);
 }
 
 function renderPremios(){
