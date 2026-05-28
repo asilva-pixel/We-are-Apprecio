@@ -322,81 +322,40 @@ body::before{
   .score-inp{width:38px;height:38px;font-size:16px;}
 }
 
-
-/* ── GRUPO TABLES ── */
-.groups-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:28px; }
-@media(max-width:520px){ .groups-grid { grid-template-columns:1fr; } }
-.group-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; }
-.group-card-title { background:var(--dark); color:white; font-family:'Bebas Neue',sans-serif; font-size:16px; padding:7px 12px; letter-spacing:0.05em; }
-.group-table { width:100%; border-collapse:collapse; font-size:12px; }
-.group-table th { background:#F7F5F2; color:#999; font-weight:700; text-transform:uppercase; font-size:10px; letter-spacing:0.05em; padding:5px 8px; text-align:center; border-bottom:1px solid var(--border); }
-.group-table th:first-child { text-align:left; padding-left:12px; }
-.group-table td { padding:6px 8px; text-align:center; border-bottom:1px solid #F5F5F5; color:var(--dark); }
-.group-table td:first-child { text-align:left; padding-left:12px; font-weight:600; }
-.group-table tr:last-child td { border-bottom:none; }
-.group-table tr.classified { background:#E8F5E9; }
-.group-table tr.classified td:first-child { color:#2E7D32; }
-.group-table tr.classified td:first-child::after { content:' ✓'; font-size:10px; color:#45C1AD; }
-.group-table .pts-col { font-weight:700; color:var(--red); }
-
 /* ── BRACKET ── */
-.bracket-stage { margin-bottom: 28px; }
-.bracket-stage-title {
-  font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--dark);
-  margin-bottom:12px; padding-bottom:8px;
-  border-bottom:2px solid var(--red); display:flex; align-items:center; gap:8px;
-}
-.bracket-grid { display:grid; gap:8px; }
-.bracket-grid-2 { grid-template-columns: repeat(2,1fr); }
-.bracket-grid-4 { grid-template-columns: repeat(2,1fr); }
-.bracket-grid-8 { grid-template-columns: repeat(2,1fr); }
-@media(min-width:600px){
-  .bracket-grid-4 { grid-template-columns: repeat(4,1fr); }
-  .bracket-grid-8 { grid-template-columns: repeat(4,1fr); }
-}
-.bracket-match {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius-sm); overflow:hidden;
-  transition:box-shadow 0.2s;
-}
-.bracket-match:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
-.bracket-match.locked { opacity:0.6; }
-.bracket-match.has-pred { border-color:#45C1AD; }
-.bracket-team {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:8px 12px; border-bottom:1px solid var(--border);
-  font-size:13px; font-weight:600; color:var(--dark);
-  min-height:38px;
-}
-.bracket-team:last-of-type { border-bottom:none; }
-.bracket-team.tbd { color:#aaa; font-weight:400; font-style:italic; }
-.bracket-team.winner { background:var(--green-light); color:var(--green-dark); }
-.bracket-score {
-  font-family:'Bebas Neue',sans-serif; font-size:18px;
-  color:var(--dark); min-width:20px; text-align:center;
-}
-.bracket-pred-area {
-  background:#FAFAFA; border-top:1px solid var(--border);
-  padding:8px 12px; display:flex; align-items:center;
-  justify-content:space-between; gap:8px;
-}
-.bracket-score-inp {
-  width:34px; height:34px; text-align:center;
-  border:1px solid var(--border); border-radius:6px;
-  font-size:16px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif;
-  background:white; color:var(--dark); outline:none;
-}
-.bracket-score-inp:focus { border-color:var(--red); }
-.bracket-score-inp:disabled { background:#F5F5F5; color:#ccc; }
-.bracket-save-btn {
-  background:var(--red); color:white; border:none;
-  padding:5px 12px; border-radius:6px;
-  font-size:11px; font-weight:700; cursor:pointer;
-  font-family:'Plus Jakarta Sans',sans-serif;
-}
-.bracket-save-btn:hover { background:var(--red-dark); }
-.bracket-date { font-size:10px; color:#aaa; padding:5px 12px; }
-.bracket-pts { font-size:10px; font-weight:700; padding:4px 8px; border-radius:20px; }
+.bracket-stage{margin-bottom:28px;}
+.bracket-stage-title{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--dark);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--red);}
+.bracket-grid{display:grid;gap:8px;}
+.bracket-grid-2{grid-template-columns:repeat(2,1fr);}
+.bracket-grid-4{grid-template-columns:repeat(2,1fr);}
+.bracket-grid-8{grid-template-columns:repeat(2,1fr);}
+@media(min-width:600px){.bracket-grid-4{grid-template-columns:repeat(4,1fr);}.bracket-grid-8{grid-template-columns:repeat(4,1fr);}}
+.bracket-match{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+.bracket-match.has-pred{border-color:#45C1AD;}
+.bracket-team{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--dark);min-height:36px;}
+.bracket-team:last-of-type{border-bottom:none;}
+.bracket-team.tbd{color:#aaa;font-weight:400;font-style:italic;}
+.bracket-score{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--dark);}
+.bracket-pred-area{background:#FAFAFA;border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.bracket-score-inp{width:34px;height:34px;text-align:center;border:1px solid var(--border);border-radius:6px;font-size:16px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;background:white;color:var(--dark);outline:none;}
+.bracket-score-inp:focus{border-color:var(--red);}
+.bracket-save-btn{background:var(--red);color:white;border:none;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
+.bracket-date{font-size:10px;color:#aaa;padding:4px 12px;}
+.bracket-pts{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;}
+/* GROUP TABLES */
+.groups-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:520px){.groups-grid{grid-template-columns:1fr;}}
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+.group-card-title{background:var(--dark);color:white;font-family:'Bebas Neue',sans-serif;font-size:15px;padding:7px 12px;}
+.group-table{width:100%;border-collapse:collapse;font-size:11px;}
+.group-table th{background:#F7F5F2;color:#999;font-weight:700;text-transform:uppercase;font-size:9px;letter-spacing:0.05em;padding:5px 6px;text-align:center;border-bottom:1px solid var(--border);}
+.group-table th:first-child{text-align:left;padding-left:10px;}
+.group-table td{padding:5px 6px;text-align:center;border-bottom:1px solid #F5F5F5;color:var(--dark);}
+.group-table td:first-child{text-align:left;padding-left:10px;font-weight:600;}
+.group-table tr:last-child td{border-bottom:none;}
+.group-table tr.classified{background:#E8F5E9;}
+.group-table tr.classified td:first-child::after{content:" ✓";font-size:9px;color:#45C1AD;}
+.group-table .pts-col{font-weight:700;color:var(--red);}
 </style>
 </head>
 <body>
@@ -404,14 +363,17 @@ body::before{
 
 <!-- LOGIN -->
 <div id="loginScreen">
+  <div class="login-logo">
+    <img src="https://raw.githubusercontent.com/asilva-pixel/We-are-Apprecio/main/apprecio_logo.png" alt="Apprecio">
+  </div>
   <div class="login-hero">
-    <div class="eyebrow">⚽ FIFA World Cup 2026</div>
+    <div class="eyebrow">⚽ Mundial 2026</div>
     <h1>WE ARE<br>APPRECIO</h1>
     <p>Un Mundial para compartir, disfrutar y celebrar.</p>
   </div>
   <div class="login-card">
     <h3>Ingresa con tu correo</h3>
-    <p class="sub">Solo para colaboradores del equipo Apprecio ❤️</p>
+    <p class="sub">Solo para Appeers del equipo Apprecio 💚</p>
     <div class="field">
       <label>Correo corporativo</label>
       <input type="email" id="loginEmail" placeholder="nombre@apprecio.com" autocomplete="email">
@@ -476,9 +438,6 @@ const CFG = {
   N8N_SAVE_PRED:   "https://n8n.openip.cl/webhook/cm-save-pred",
   N8N_GET_PREDS:   "https://n8n.openip.cl/webhook/cm-get-preds",
   N8N_LEADERBOARD: "https://n8n.openip.cl/webhook/cm-leaderboard",
-  N8N_RESULTS:     "https://n8n.openip.cl/webhook/cm-results",
-  N8N_KNOCKOUT:    "https://n8n.openip.cl/webhook/cm-knockout",
-
   WC_COMPETITION: "WC",
   WC_SEASON: 2026,
   VALID_DOMAINS: ["apprecio.com","apprecio.pe","apprecio.co","apprecio.mx","apprecio.cl","apprecio.es"],
@@ -533,44 +492,28 @@ async function doLogin(){
   if(!CFG.VALID_DOMAINS.includes(domain)){errEl.textContent="Solo cuentas @apprecio. Contacta a tu equipo de Cultura si crees que es un error.";return;}
   btn.style.opacity="0.7";btn.innerHTML="<span>Cargando...</span>";
   try{
-    let loginData;
-    try{
-      const loginRes = await fetch(CFG.N8N_LOGIN, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-        mode: "cors"
-      });
-      if(!loginRes.ok && loginRes.status===0){throw new Error("CORS blocked");}
-      loginData = await loginRes.json();
-    }catch(fetchErr){
-      // If n8n is unreachable, show specific message
-      console.error("Fetch error:", fetchErr);
-      errEl.textContent="No se pudo conectar con el servidor. Verifica tu conexión o contacta soporte.";
-      btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
-      return;
-    }
-    if(!loginData.ok){
-      errEl.textContent = loginData.error || "Error al iniciar sesión.";
-      btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
-      return;
-    }
+    // Login via n8n — el Sheet nunca se expone al browser
+    const loginRes = await fetch(CFG.N8N_LOGIN, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+    const loginData = await loginRes.json();
+    if(!loginData.ok){ errEl.textContent = loginData.error || "Error al iniciar sesión."; btn.style.opacity="1"; btn.innerHTML="<span>Entrar</span><span>→</span>"; return; }
     allUsers[email] = { email, nombre: loginData.nombre, pais: loginData.pais };
     user = allUsers[email];
     await loadPredictions();
     await loadMatches();
     document.getElementById("navName").textContent=user.nombre||email.split("@")[0];
     document.getElementById("navFlag").textContent=FLAGS[user.pais]||"🌍";
+    // Fix nav logo — use full base64
+    
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("appScreen").style.display="flex";
     document.getElementById("appScreen").style.flexDirection="column";
     renderHome();renderPremios();
-    // Auto-refresh results every 5 minutes
-    setInterval(async()=>{ await mergeResults(); renderHome(); renderFixture(); await renderTabla(); }, 5*60*1000);
-  }catch(e){
-    errEl.textContent="Error inesperado: "+e.message;
-    console.error("Login error:",e);
-  }
+    setInterval(async()=>{ await mergeResults(); renderHome(); renderFixture(); }, 5*60*1000);
+  }catch(e){errEl.textContent="Error al conectar. Intenta de nuevo.";console.error(e);}
   btn.style.opacity="1";btn.innerHTML="<span>Entrar</span><span>→</span>";
 }
 
@@ -588,8 +531,7 @@ async function loadMatches(){
   try{
     if(CFG.FOOTBALL_API_KEY==="3ff849c2652846ce9a9b31910ab7cb98"){
       allMatches=demoMatches();
-      document.getElementById("syncLbl").innerHTML="Fixture provisional <button class=\"refresh-btn\" onclick=\"loadMatches()\">↻ Actualizar</button>";
-      await mergeResults();
+      document.getElementById("syncLbl").innerHTML="⚠️ Modo demo <button class=\"refresh-btn\" onclick=\"loadMatches()\">↻</button>";
     } else {
       const r=await fetch(`https://api.football-data.org/v4/competitions/${CFG.WC_COMPETITION}/matches?season=${CFG.WC_SEASON}`,{headers:{"X-Auth-Token":CFG.FOOTBALL_API_KEY}});
       // Respect rate limit headers as recommended by football-data.org
@@ -608,11 +550,10 @@ async function loadMatches(){
       }));
       const now=new Date();
       document.getElementById("syncLbl").innerHTML=`Actualizado ${now.toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"})} <button class="refresh-btn" onclick="loadMatches()">↻</button>`;
-      // Merge real results from Sheet
-      await mergeResults();
     }
   }catch(e){allMatches=demoMatches();console.error(e);}
   document.getElementById("fixtureLoad").style.display="none";
+  await mergeResults();
   renderFixture();renderHome();
 }
 
@@ -620,9 +561,7 @@ async function loadPredictions(){
   if(!user)return;
   try{
     const r = await fetch(`${CFG.N8N_GET_PREDS}?email=${encodeURIComponent(user.email)}`);
-    const txt = await r.text();
-    if(!txt) return;
-    const data = JSON.parse(txt);
+    const data = await r.json();
     if(data.ok && data.predictions){
       if(!allPreds[user.email]) allPreds[user.email]={};
       data.predictions.forEach(p => {
@@ -637,296 +576,160 @@ async function savePrediction(matchId,fromHome=false){
   const home=document.getElementById(`ph${sfx}_${matchId}`)?.value;
   const away=document.getElementById(`pa${sfx}_${matchId}`)?.value;
   if(home===""||home===undefined||away===""||away===undefined){toast("⚠️ Ingresa ambos marcadores");return;}
-
   const matchDate=allMatches.find(m=>m.id==matchId)?.date||new Date('2099-01-01').toISOString();
   try{
     const res=await fetch(CFG.N8N_SAVE_PRED,{
       method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,timestamp:new Date().toISOString(),match_date:matchDate})
+      body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,
+        timestamp:new Date().toISOString(),match_date:matchDate})
     });
     let data={ok:true};
-    try{ const txt=await res.text(); if(txt) data=JSON.parse(txt); }catch(e){}
+    try{const txt=await res.text();if(txt)data=JSON.parse(txt);}catch(e){}
     if(!data.ok){toast("⚠️ "+(data.error||"No se pudo guardar"));return;}
     if(!allPreds[user.email])allPreds[user.email]={};
-    allPreds[user.email][matchId]={home,away};
+    allPreds[user.email][String(matchId)]={home,away};
     toast("✅ Pronóstico guardado");
     renderHome();
     if(!fromHome)renderFixture();
-  }catch(e){toast("⚠️ Error al guardar. Intenta de nuevo.");console.error(e);}
+  }catch(e){toast("⚠️ Error al guardar");console.error(e);}
 }
 
 
-
 // ═══════════════════════════════════════
-// BRACKET — FASE ELIMINATORIA
+// BRACKET
 // ═══════════════════════════════════════
-let knockoutMatches = [];
-let knockoutPreds = {};
-
-const KNOCKOUT_STAGES = [
-  { id:'R16',   label:'Octavos de Final',   slots:16, cols:'bracket-grid-8' },
-  { id:'QF',    label:'Cuartos de Final',   slots:8,  cols:'bracket-grid-4' },
-  { id:'SF',    label:'Semifinales',        slots:4,  cols:'bracket-grid-2' },
-  { id:'3RD',   label:'Tercer y Cuarto Lugar', slots:2, cols:'bracket-grid-2' },
-  { id:'FINAL', label:'Gran Final',         slots:2,  cols:'bracket-grid-2' },
+let knockoutMatches=[];
+let knockoutPreds={};
+const KNOCKOUT_STAGES=[
+  {id:'R16',label:'Octavos de Final',cols:'bracket-grid-8'},
+  {id:'QF',label:'Cuartos de Final',cols:'bracket-grid-4'},
+  {id:'SF',label:'Semifinales',cols:'bracket-grid-2'},
+  {id:'3RD',label:'Tercer y Cuarto Lugar',cols:'bracket-grid-2'},
+  {id:'FINAL',label:'Gran Final',cols:'bracket-grid-2'},
 ];
 
-
 function calcGroupStandings(){
-  // Build standings from allMatches that are FINISHED
-  const groups = {};
-  allMatches.forEach(m => {
-    if(!m.group) return;
-    if(!groups[m.group]) groups[m.group] = {};
-    const g = groups[m.group];
-    // Init teams
-    [m.homeTeam, m.awayTeam].forEach(t => {
-      if(!g[t]) g[t] = { name:t, pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 };
+  const groups={};
+  allMatches.forEach(m=>{
+    if(!m.group)return;
+    if(!groups[m.group])groups[m.group]={};
+    const g=groups[m.group];
+    [m.homeTeam,m.awayTeam].forEach((t,ti)=>{
+      if(!g[t])g[t]={name:t,flag:ti===0?m.homeFlag:m.awayFlag,pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,pts:0};
     });
-    if(m.status !== 'FINISHED') return;
-    const real = m.score?.fullTime;
-    if(!real || real.home==null) return;
-    const h = parseInt(real.home), a = parseInt(real.away);
-    g[m.homeTeam].pj++; g[m.awayTeam].pj++;
-    g[m.homeTeam].gf += h; g[m.homeTeam].gc += a;
-    g[m.awayTeam].gf += a; g[m.awayTeam].gc += h;
-    if(h > a){
-      g[m.homeTeam].pg++; g[m.homeTeam].pts+=3;
-      g[m.awayTeam].pp++;
-    } else if(h < a){
-      g[m.awayTeam].pg++; g[m.awayTeam].pts+=3;
-      g[m.homeTeam].pp++;
-    } else {
-      g[m.homeTeam].pe++; g[m.homeTeam].pts++;
-      g[m.awayTeam].pe++; g[m.awayTeam].pts++;
-    }
+    if(m.status!=='FINISHED')return;
+    const real=m.score?.fullTime;
+    if(!real||real.home==null)return;
+    const h=parseInt(real.home),a=parseInt(real.away);
+    g[m.homeTeam].pj++;g[m.awayTeam].pj++;
+    g[m.homeTeam].gf+=h;g[m.homeTeam].gc+=a;
+    g[m.awayTeam].gf+=a;g[m.awayTeam].gc+=h;
+    if(h>a){g[m.homeTeam].pg++;g[m.homeTeam].pts+=3;g[m.awayTeam].pp++;}
+    else if(h<a){g[m.awayTeam].pg++;g[m.awayTeam].pts+=3;g[m.homeTeam].pp++;}
+    else{g[m.homeTeam].pe++;g[m.homeTeam].pts++;g[m.awayTeam].pe++;g[m.awayTeam].pts++;}
   });
   return groups;
 }
 
 function renderGroupTables(){
-  const groups = calcGroupStandings();
-  if(!Object.keys(groups).length) return '';
-
-  const sorted = Object.keys(groups).sort();
-  let h = '<div class="groups-grid">';
-
-  sorted.forEach(groupName => {
-    const teams = Object.values(groups[groupName])
-      .sort((a,b) => b.pts-a.pts || (b.gf-b.gc)-(a.gf-a.gc) || b.gf-a.gf);
-
-    h += `<div class="group-card">
-      <div class="group-card-title">${groupName}</div>
-      <table class="group-table">
-        <thead><tr>
-          <th>Equipo</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>Pts</th>
-        </tr></thead>
-        <tbody>`;
-
-    teams.forEach((t,i) => {
-      const isClassified = i < 2 && t.pj > 0;
-      const teamFlag = allMatches.find(m=>m.homeTeam===t.name||m.awayTeam===t.name);
-      const flag = teamFlag ? (teamFlag.homeTeam===t.name ? teamFlag.homeFlag : teamFlag.awayFlag) : '';
-      h += `<tr class="${isClassified?'classified':''}">
-        <td>${flag} ${t.name}</td>
-        <td>${t.pj}</td><td>${t.pg}</td><td>${t.pe}</td><td>${t.pp}</td>
-        <td>${t.gf}</td><td>${t.gc}</td>
-        <td class="pts-col">${t.pts}</td>
-      </tr>`;
+  const groups=calcGroupStandings();
+  if(!Object.keys(groups).length)return'';
+  const sorted=Object.keys(groups).sort();
+  let h='<div class="groups-grid">';
+  sorted.forEach(gName=>{
+    const teams=Object.values(groups[gName]).sort((a,b)=>b.pts-a.pts||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf);
+    h+=`<div class="group-card"><div class="group-card-title">${gName}</div>
+    <table class="group-table"><thead><tr><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>Pts</th></tr></thead><tbody>`;
+    teams.forEach((t,i)=>{
+      h+=`<tr class="${i<2&&t.pj>0?'classified':''}"><td>${t.flag||''} ${t.name}</td><td>${t.pj}</td><td>${t.pg}</td><td>${t.pe}</td><td>${t.pp}</td><td>${t.gf}</td><td>${t.gc}</td><td class="pts-col">${t.pts}</td></tr>`;
     });
-
-    h += `</tbody></table></div>`;
+    h+=`</tbody></table></div>`;
   });
-
-  h += '</div>';
+  h+='</div>';
   return h;
 }
 
 async function loadBracket(){
   document.getElementById('bracketSync').innerHTML='<span style="font-size:11px;color:#aaa;">Cargando...</span>';
   try{
-    const r = await fetch(CFG.N8N_KNOCKOUT);
-    const txt = await r.text();
-    if(txt){
-      const data = JSON.parse(txt);
-      if(data.ok && data.matches) knockoutMatches = data.matches;
-    }
-  }catch(e){ console.warn('Knockout load error', e); }
-
-  // Load knockout predictions
-  try{
-    const r = await fetch(`${CFG.N8N_GET_PREDS}?email=${encodeURIComponent(user.email)}&type=knockout`);
-    const txt = await r.text();
-    if(txt){
-      const data = JSON.parse(txt);
-      if(data.ok && data.predictions){
-        data.predictions.forEach(p=>{
-          knockoutPreds[p.match_id] = { home: p.home_pred, away: p.away_pred };
-        });
-      }
-    }
-  }catch(e){ console.warn('Knockout preds load error', e); }
-
-  document.getElementById('bracketSync').innerHTML=
-    `<button class="refresh-btn" onclick="loadBracket()">↻ Actualizar</button>`;
+    const r=await fetch(CFG.N8N_KNOCKOUT);
+    const txt=await r.text();
+    if(txt){const data=JSON.parse(txt);if(data.ok&&data.matches)knockoutMatches=data.matches;}
+  }catch(e){console.warn('Knockout load error',e);}
+  document.getElementById('bracketSync').innerHTML='<button class="refresh-btn" onclick="loadBracket()">↻ Actualizar</button>';
   renderBracket();
 }
 
 function renderBracket(){
-  const el = document.getElementById('bracketContent');
-  const email = user.email;
-
-  // Always show group tables first
-  const groupTablesHtml = renderGroupTables();
-  const hasGroups = groupTablesHtml.length > 0;
-
+  const el=document.getElementById('bracketContent');
+  const groupHtml=renderGroupTables();
+  let h=groupHtml?`<div class="bracket-stage"><div class="bracket-stage-title">📊 Fase de Grupos</div>${groupHtml}</div>`:'';
   if(!knockoutMatches.length){
-    el.innerHTML = (hasGroups
-      ? `<div class="bracket-stage"><div class="bracket-stage-title">📊 Fase de Grupos</div>${groupTablesHtml}</div>`
-      : '') +
-      `<div class="empty">
-        <div class="ic">🏆</div>
-        <p style="margin-bottom:8px;">La fase eliminatoria comienza el <strong>27 de junio</strong>.</p>
-        <p style="font-size:12px;color:#aaa;">Los clasificados se llenarán automáticamente cuando terminen los grupos.</p>
-      </div>`;
+    el.innerHTML=h+`<div class="empty"><div class="ic">🏆</div><p style="margin-bottom:6px">La fase eliminatoria comienza el <strong>27 de junio</strong>.</p><p style="font-size:12px;color:#aaa">Los clasificados se llenan automáticamente.</p></div>`;
     return;
   }
-  
-  // Also prepend group tables to full bracket
-  let groupSection = hasGroups
-    ? `<div class="bracket-stage"><div class="bracket-stage-title">📊 Fase de Grupos — Tabla de posiciones</div>${groupTablesHtml}</div>`
-    : '';
-
-  let h = groupSection || '';
   KNOCKOUT_STAGES.forEach(stage=>{
-    const matches = knockoutMatches.filter(m=>m.stage===stage.id);
-    if(!matches.length) return;
-
-    h += `<div class="bracket-stage">
-      <div class="bracket-stage-title">⚽ ${stage.label}</div>
-      <div class="bracket-grid ${stage.cols}">`;
-
+    const matches=knockoutMatches.filter(m=>m.stage===stage.id);
+    if(!matches.length)return;
+    h+=`<div class="bracket-stage"><div class="bracket-stage-title">⚽ ${stage.label}</div><div class="bracket-grid ${stage.cols}">`;
     matches.forEach(m=>{
-      const pred = knockoutPreds[m.id];
-      const isFinished = m.status==='FINISHED';
-      const isOpen = m.home_team && m.away_team && m.status!=='FINISHED' &&
-                     (m.match_date ? new Date(m.match_date) > new Date() : true);
-      const isTBD = !m.home_team || !m.away_team;
-      const pts = pred && isFinished ? calcPts(pred,{home:m.home_score,away:m.away_score}) : null;
-      const dStr = m.match_date ?
-        new Date(m.match_date).toLocaleDateString('es',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
-
-      h += `<div class="bracket-match ${isTBD?'locked':''} ${pred&&!isFinished?'has-pred':''}">`;
-
-      // Home team row
-      h += `<div class="bracket-team ${isTBD&&!m.home_team?'tbd':''} ${isFinished&&m.home_score>m.away_score?'winner':''}">
-        <span>${m.home_team||'Por definir'}</span>
-        ${isFinished?`<span class="bracket-score">${m.home_score}</span>`:''}
-      </div>`;
-
-      // Away team row
-      h += `<div class="bracket-team ${isTBD&&!m.away_team?'tbd':''} ${isFinished&&m.away_score>m.home_score?'winner':''}">
-        <span>${m.away_team||'Por definir'}</span>
-        ${isFinished?`<span class="bracket-score">${m.away_score}</span>`:''}
-      </div>`;
-
-      // Date
-      if(dStr) h += `<div class="bracket-date">${dStr}</div>`;
-
-      // Prediction area
-      if(isOpen){
-        h += `<div class="bracket-pred-area">
+      const pred=knockoutPreds[m.id];
+      const isF=m.status==='FINISHED';
+      const isOpen=m.home_team&&m.away_team&&m.status!=='FINISHED'&&(m.match_date?new Date(m.match_date)>new Date():true);
+      const isTBD=!m.home_team||!m.away_team;
+      const pts=pred&&isF?calcPts(pred,{home:m.home_score,away:m.away_score}):null;
+      const dStr=m.match_date?new Date(m.match_date).toLocaleDateString('es',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+      h+=`<div class="bracket-match ${pred&&!isF?'has-pred':''}">
+        <div class="bracket-team ${!m.home_team?'tbd':''}">${m.home_team||'Por definir'}${isF?`<span class="bracket-score">${m.home_score}</span>`:''}</div>
+        <div class="bracket-team ${!m.away_team?'tbd':''}">${m.away_team||'Por definir'}${isF?`<span class="bracket-score">${m.away_score}</span>`:''}</div>
+        ${dStr?`<div class="bracket-date">${dStr}</div>`:''}
+        ${isOpen?`<div class="bracket-pred-area">
           <div style="display:flex;align-items:center;gap:6px;">
-            <input type="number" class="bracket-score-inp" id="ko_h_${m.id}" min="0" max="20"
-              value="${pred?pred.home:''}" placeholder="-">
-            <span style="color:#ddd;font-size:16px;">:</span>
-            <input type="number" class="bracket-score-inp" id="ko_a_${m.id}" min="0" max="20"
-              value="${pred?pred.away:''}" placeholder="-">
+            <input type="number" class="bracket-score-inp" id="ko_h_${m.id}" min="0" max="20" value="${pred?pred.home:''}" placeholder="-">
+            <span style="color:#ddd">:</span>
+            <input type="number" class="bracket-score-inp" id="ko_a_${m.id}" min="0" max="20" value="${pred?pred.away:''}" placeholder="-">
           </div>
-          <button class="bracket-save-btn" onclick="saveKnockoutPred('${m.id}','${m.match_date||''}')">
-            ${pred?'Actualizar':'Guardar'}
-          </button>
-        </div>`;
-      } else if(isFinished && pred){
-        h += `<div class="bracket-pred-area">
-          <span style="font-size:11px;color:#aaa;">Mi pronóstico: <strong style="color:var(--dark)">${pred.home}:${pred.away}</strong></span>
-          ${pts!==null?`<span class="bracket-pts ${pts===3?'pts-exact':pts===1?'pts-winner':'pts-miss'}">${pts===3?'🎯 +3':pts===1?'✓ +1':'✗ 0'}</span>`:''}
-        </div>`;
-      } else if(isFinished && !pred){
-        h += `<div class="bracket-pred-area">
-          <span style="font-size:11px;color:#aaa;">Sin pronóstico</span>
-          <span class="bracket-pts pts-miss">✗ 0</span>
-        </div>`;
-      } else if(isTBD){
-        h += `<div class="bracket-pred-area">
-          <span style="font-size:11px;color:#aaa;">Se habilitará cuando se conozcan los equipos</span>
-        </div>`;
-      }
-
-      h += `</div>`;
+          <button class="bracket-save-btn" onclick="saveKnockoutPred('${m.id}','${m.match_date||''}')">${pred?'Actualizar':'Guardar'}</button>
+        </div>`:''}
+        ${isF&&pred?`<div class="bracket-pred-area"><span style="font-size:11px;color:#aaa">Mi pred: <strong>${pred.home}:${pred.away}</strong></span>${pts!==null?`<span class="bracket-pts ${pts===3?'pts-exact':pts===1?'pts-winner':'pts-miss'}">${pts===3?'🎯+3':pts===1?'+1':'0'}</span>`:''}</div>`:''}
+        ${isTBD?`<div class="bracket-pred-area"><span style="font-size:11px;color:#aaa">Disponible cuando se definan los equipos</span></div>`:''}
+      </div>`;
     });
-
-    h += `</div></div>`;
+    h+=`</div></div>`;
   });
-
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-async function saveKnockoutPred(matchId, matchDate){
-  const home = document.getElementById(`ko_h_${matchId}`)?.value;
-  const away = document.getElementById(`ko_a_${matchId}`)?.value;
+async function saveKnockoutPred(matchId,matchDate){
+  const home=document.getElementById(`ko_h_${matchId}`)?.value;
+  const away=document.getElementById(`ko_a_${matchId}`)?.value;
   if(home===''||away===''){toast('⚠️ Ingresa ambos marcadores');return;}
   try{
-    const res = await fetch(CFG.N8N_SAVE_PRED, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        email: user.email,
-        match_id: matchId,
-        home_pred: home,
-        away_pred: away,
-        timestamp: new Date().toISOString(),
-        match_date: matchDate || new Date('2099-01-01').toISOString(),
-        type: 'knockout'
-      })
-    });
+    const res=await fetch(CFG.N8N_SAVE_PRED,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:user.email,match_id:matchId,home_pred:home,away_pred:away,
+        timestamp:new Date().toISOString(),match_date:matchDate||new Date('2099-01-01').toISOString()})});
     let data={ok:true};
-    try{ const txt=await res.text(); if(txt) data=JSON.parse(txt); }catch(e){}
+    try{const txt=await res.text();if(txt)data=JSON.parse(txt);}catch(e){}
     if(!data.ok){toast('⚠️ '+(data.error||'No se pudo guardar'));return;}
-    knockoutPreds[matchId] = {home, away};
+    knockoutPreds[matchId]={home,away};
     toast('✅ Pronóstico guardado');
     renderBracket();
   }catch(e){toast('⚠️ Error al guardar');console.error(e);}
 }
 
-// Include knockout pts in total
-function getUserPtsTotal(email){
-  let pts = getUserPts(email);
-  knockoutMatches.forEach(m=>{
-    const pred = (email===user?.email ? knockoutPreds : {})[m.id];
-    if(pred && m.status==='FINISHED'){
-      pts += calcPts(pred,{home:m.home_score,away:m.away_score})||0;
-    }
-  });
-  return pts;
-}
-
 async function mergeResults(){
-  // Read results via n8n webhook — Sheet is private, never exposed
   try{
-    const r = await fetch(CFG.N8N_RESULTS);
-    const txt = await r.text();
-    if(!txt) return;
-    const data = JSON.parse(txt);
-    if(!data.ok || !data.results) return;
+    const r=await fetch(CFG.N8N_RESULTS);
+    const txt=await r.text();
+    if(!txt)return;
+    const data=JSON.parse(txt);
+    if(!data.ok||!data.results)return;
     data.results.forEach(res=>{
-      if(!res.match_id || res.home_score==='' || res.away_score==='') return;
-      const m = allMatches.find(m=>String(m.id)===String(res.match_id));
-      if(m){
-        m.status = 'FINISHED';
-        m.score = { fullTime: { home: parseInt(res.home_score), away: parseInt(res.away_score) } };
-      }
+      if(!res.match_id||res.home_score===''||res.away_score==='')return;
+      const m=allMatches.find(m=>String(m.id)===String(res.match_id));
+      if(m){m.status='FINISHED';m.score={fullTime:{home:parseInt(res.home_score),away:parseInt(res.away_score)}};}
     });
-  }catch(e){ console.warn('Results merge error', e); }
+  }catch(e){console.warn('Results merge error',e);}
 }
 
 function renderHome(){
@@ -936,10 +739,15 @@ function renderHome(){
   const predCount=Object.keys(allPreds[email]||{}).length;
   const ranked=Object.keys(allUsers).map(em=>({email:em,pts:getUserPts(em)})).sort((a,b)=>b.pts-a.pts);
   const myRank=ranked.findIndex(r=>r.email===email)+1;
+  const pending=allMatches.filter(m=>{
+    const isOpen=m.status==="TIMED"||m.status==="SCHEDULED"||m.status==="demo-open";
+    return isOpen&&!allPreds[email]?.[m.id];
+  }).slice(0,3);
+  const recent=allMatches.filter(m=>m.status==="FINISHED").slice(-3).reverse();
 
   let h=`<div class="home-hero">
     <div class="home-hero-left">
-      <div class="greet">Bienvenido colaborador</div>
+      <div class="greet">Bienvenido Appeer</div>
       <div class="name">${(user.nombre||email.split("@")[0]).split(" ")[0]} <span>${FLAGS[user.pais]||""}</span></div>
     </div>
     <div class="home-hero-right">
@@ -953,47 +761,25 @@ function renderHome(){
     <div class="stat-box"><div class="v">${predCount}</div><div class="l">Pronósticos</div></div>
   </div>`;
 
-  // Partidos finalizados — muestra resultado real + mi pronóstico + puntos
-  const finished=allMatches.filter(m=>m.status==="FINISHED");
-  if(finished.length){
-    h+=`<div class="phase-lbl">✅ Resultados finales</div>`;
-    finished.slice().reverse().forEach(m=>{
+  if(recent.length){
+    h+=`<div class="phase-lbl">Últimos resultados</div>`;
+    recent.forEach(m=>{
       const pred=allPreds[email]?.[m.id];
       const real=m.score?.fullTime;
-      const pts=pred&&real!=null?calcPts(pred,{home:real.home,away:real.away}):null;
+      const pts=pred&&real?calcPts(pred,{home:real.home,away:real.away}):null;
       h+=`<div class="match-card">
-        <div class="match-meta">
-          <span class="match-date">${m.date?new Date(m.date).toLocaleDateString("es",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):""}</span>
-          <span class="badge badge-played">✓ Finalizado</span>
-        </div>
         <div class="match-row">
-          <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
+          <div class="team-block"><span class="flag">${m.homeFlag||"🌍"}</span><span class="tname">${m.homeTeam}</span></div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-            <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${real?.home??"-"} : ${real?.away??"-"}</span>
-            <span style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em">resultado final</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--dark)">${real?.home??"-"} : ${real?.away??"-"}</span>
+            ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"+3 exacto":pts===1?"+1 ganador":"0 pts"}</span>`:`<span style="font-size:10px;color:#ccc">sin pronóstico</span>`}
           </div>
-          <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
-        </div>
-        <div class="match-foot">
-          <span style="font-size:12px;color:#aaa;">
-            ${pred?`Mi pronóstico: <strong style="color:var(--dark)">${pred.home} : ${pred.away}</strong>`:"Sin pronóstico"}
-          </span>
-          ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"🎯 +3 exacto":pts===1?"✓ +1 ganador":"✗ 0 pts"}</span>`
-          :pred?"":`<span class="pts-chip pts-miss">✗ 0 pts</span>`}
+          <div class="team-block away"><span class="flag">${m.awayFlag||"🌍"}</span><span class="tname">${m.awayTeam}</span></div>
         </div>
       </div>`;
     });
   }
 
-  const now=new Date();
-  const openMatches=allMatches.filter(m=>{
-    const notStarted=m.status==="TIMED"||m.status==="SCHEDULED"||m.status==="demo-open";
-    const hasDate=m.date?new Date(m.date)>now:true;
-    return (notStarted||hasDate)&&m.status!=="FINISHED";
-  });
-
-  // Partidos sin pronóstico aún
-  const pending=openMatches.filter(m=>!allPreds[email]?.[m.id]).slice(0,3);
   if(pending.length){
     h+=`<div class="phase-lbl">⚠️ Faltan tus pronósticos</div>`;
     pending.forEach(m=>{
@@ -1001,173 +787,69 @@ function renderHome(){
       h+=`<div class="match-card highlight">
         <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Abierto</span></div>
         <div class="match-row">
-          <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
+          <div class="team-block"><span class="flag">${m.homeFlag||"🌍"}</span><span class="tname">${m.homeTeam}</span></div>
           <div class="score-block">
             <input type="number" class="score-inp" id="ph_h_${m.id}" min="0" max="20" placeholder="-">
             <span class="sep">:</span>
             <input type="number" class="score-inp" id="pa_h_${m.id}" min="0" max="20" placeholder="-">
           </div>
-          <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
+          <div class="team-block away"><span class="flag">${m.awayFlag||"🌍"}</span><span class="tname">${m.awayTeam}</span></div>
         </div>
         <div class="match-foot"><span></span><button class="btn-save" onclick="savePrediction(${m.id},true)">Guardar pronóstico</button></div>
       </div>`;
     });
   }
 
-  // Partidos con pronóstico guardado (aún no jugados)
-  const saved=openMatches.filter(m=>allPreds[email]?.[m.id]).slice(0,5);
-  if(saved.length){
-    h+=`<div class="phase-lbl">✅ Pronósticos guardados</div>`;
-    saved.forEach(m=>{
-      const pred=allPreds[email][m.id];
-      const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
-      h+=`<div class="match-card">
-        <div class="match-meta"><span class="match-date">${dStr}</span><span class="badge badge-open">Abierto</span></div>
-        <div class="match-row">
-          <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
-          <div class="score-block">
-            <input type="number" class="score-inp" id="ph_h_${m.id}" min="0" max="20" value="${pred.home}" placeholder="-">
-            <span class="sep">:</span>
-            <input type="number" class="score-inp" id="pa_h_${m.id}" min="0" max="20" value="${pred.away}" placeholder="-">
-          </div>
-          <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
-        </div>
-        <div class="match-foot">
-          <span style="font-size:11px;color:#aaa;">Puedes modificarlo hasta que inicie</span>
-          <button class="btn-save" onclick="savePrediction(${m.id},true)">Actualizar</button>
-        </div>
-      </div>`;
-    });
-  }
-
-  if(!finished.length&&!pending.length&&!saved.length){
-    h+=`<div class="empty"><div class="ic">⚽</div><p>Los partidos se cargarán próximamente.</p></div>`;
+  if(!recent.length&&!pending.length){
+    h+=`<div class="empty"><div class="ic">⚽</div><p>El fixture se cargará próximamente con los partidos del Mundial 2026.</p></div>`;
   }
   el.innerHTML=h;
-}
-
-function isMatchOpen(m){
-  if(m.status==="FINISHED"||m.status==="IN_PLAY"||m.status==="PAUSED") return false;
-  if(m.date && new Date(m.date) <= new Date()) return false;
-  return true;
 }
 
 function renderFixture(){
   const el=document.getElementById("fixtureContent");
   if(!allMatches.length){el.innerHTML=`<div class="empty"><div class="ic">📅</div><p>Cargando partidos...</p></div>`;return;}
   const email=user.email;
-
-  // Group ALL matches by group
   const groups={};
   allMatches.forEach(m=>{
     const k=m.group||m.stage||"Partidos";
     if(!groups[k])groups[k]=[];
     groups[k].push(m);
   });
-
   let h="";
-
   Object.entries(groups).forEach(([phase,matches])=>{
     h+=`<div class="phase-lbl">${phase.replace(/_/g," ")}</div>`;
     matches.forEach(m=>{
       const pred=allPreds[email]?.[m.id];
       const real=m.score?.fullTime;
-      const isFinished=m.status==="FINISHED";
-      const isOpen=isMatchOpen(m);
-      const alreadySaved=!!pred;
-      const pts=pred&&real!=null?calcPts(pred,{home:real.home,away:real.away}):null;
+      const isF=m.status==="FINISHED";
+      const isO=m.status==="TIMED"||m.status==="SCHEDULED"||m.status==="demo-open";
+      const pts=pred&&real?calcPts(pred,{home:real.home,away:real.away}):null;
       const dStr=m.date?new Date(m.date).toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):m.dateLabel||"";
-
-      if(isFinished){
-        // Estado: Finalizado — muestra resultado real + mi pronóstico + puntos
-        h+=`<div class="match-card">
-          <div class="match-meta">
-            <span class="match-date">${dStr}</span>
-            <div class="badges">
-              <span class="badge badge-played">✓ Finalizado</span>
-              ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"🎯 +3":pts===1?"✓ +1":"✗ 0"}</span>`:""}
-            </div>
+      h+=`<div class="match-card">
+        <div class="match-meta">
+          <span class="match-date">${dStr}</span>
+          <div class="badges">
+            ${isF?`<span class="badge badge-played">✓ Jugado</span>`:""}
+            ${isO?`<span class="badge badge-open">Abierto</span>`:""}
+            ${!isO&&!isF?`<span class="badge badge-locked">Cerrado</span>`:""}
+            ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"+3":pts===1?"+1":"0"}</span>`:""}
           </div>
-          <div class="match-row">
-            <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-              <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${real?.home??"-"} : ${real?.away??"-"}</span>
-              <span style="font-size:10px;color:#aaa;">resultado final</span>
-            </div>
-            <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
+        </div>
+        <div class="match-row">
+          <div class="team-block"><span class="flag">${m.homeFlag||"🌍"}</span><span class="tname">${m.homeTeam}</span></div>
+          <div class="score-block">
+            <input type="number" class="score-inp" id="ph_${m.id}" min="0" max="20" value="${pred?pred.home:""}" placeholder="-" ${!isO?"disabled":""}>
+            <span class="sep">:</span>
+            <input type="number" class="score-inp" id="pa_${m.id}" min="0" max="20" value="${pred?pred.away:""}" placeholder="-" ${!isO?"disabled":""}>
           </div>
-          <div class="match-foot">
-            <span style="font-size:12px;color:#aaa;">${pred?`Mi pronóstico: <strong style="color:var(--dark)">${pred.home} : ${pred.away}</strong>`:"Sin pronóstico"}</span>
-            ${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"Exacto +3pts":pts===1?"Ganador +1pt":"Sin puntos"}</span>`:""}
-          </div>
-        </div>`;
-      } else if(isOpen && alreadySaved){
-        // Estado: Abierto + pronóstico guardado — bloqueado, muestra predicción
-        h+=`<div class="match-card">
-          <div class="match-meta">
-            <span class="match-date">${dStr}</span>
-            <div class="badges">
-              <span class="badge badge-open">Pendiente</span>
-              <span class="pts-chip" style="background:#E8F5E9;color:#2E7D32;">✓ Guardado</span>
-            </div>
-          </div>
-          <div class="match-row">
-            <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-              <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--dark);line-height:1">${pred.home} : ${pred.away}</span>
-              <span style="font-size:10px;color:#aaa;">tu pronóstico</span>
-            </div>
-            <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
-          </div>
-          <div class="match-foot"><span style="font-size:11px;color:#aaa;">Puedes modificarlo hasta que inicie el partido</span></div>
-        </div>`;
-      } else if(isOpen && !alreadySaved){
-        // Estado: Abierto + sin pronóstico — puede ingresar
-        h+=`<div class="match-card highlight">
-          <div class="match-meta">
-            <span class="match-date">${dStr}</span>
-            <span class="badge badge-open">⚠️ Falta tu pronóstico</span>
-          </div>
-          <div class="match-row">
-            <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
-            <div class="score-block">
-              <input type="number" class="score-inp" id="ph_${m.id}" min="0" max="20" placeholder="-">
-              <span class="sep">:</span>
-              <input type="number" class="score-inp" id="pa_${m.id}" min="0" max="20" placeholder="-">
-            </div>
-            <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
-          </div>
-          <div class="match-foot">
-            <span style="font-size:11px;color:#aaa">Tu pronóstico</span>
-            <button class="btn-save" onclick="savePrediction(${m.id})">Guardar</button>
-          </div>
-        </div>`;
-      } else {
-        // Estado: Cerrado sin pronóstico — partido iniciado sin predicción
-        h+=`<div class="match-card">
-          <div class="match-meta">
-            <span class="match-date">${dStr}</span>
-            <div class="badges">
-              <span class="badge badge-locked">En juego / Cerrado</span>
-              <span class="pts-chip pts-miss">✗ 0 pts</span>
-            </div>
-          </div>
-          <div class="match-row">
-            <div class="team-block"><span class="team-flag" style="font-size:20px;margin-right:4px;">${m.homeFlag||""}</span><span class="tname">${m.homeTeam}</span></div>
-            <div style="display:flex;flex-direction:column;align-items:center;">
-              <span style="font-size:13px;color:#aaa;">Sin pronóstico</span>
-            </div>
-            <div class="team-block away"><span class="tname">${m.awayTeam}</span><span class="team-flag" style="font-size:20px;margin-left:4px;">${m.awayFlag||""}</span></div>
-          </div>
-        </div>`;
-      }
+          <div class="team-block away"><span class="flag">${m.awayFlag||"🌍"}</span><span class="tname">${m.awayTeam}</span></div>
+        </div>
+        ${isF?`<div class="match-foot"><span class="real-res">Resultado real: <strong>${real?.home??"-"} : ${real?.away??"-"}</strong></span>${pts!==null?`<span class="pts-chip ${pts===3?"pts-exact":pts===1?"pts-winner":"pts-miss"}">${pts===3?"✓ Exacto 3pts":pts===1?"✓ Ganador 1pt":"✗ Sin puntos"}</span>`:""}</div>`:""}
+        ${isO?`<div class="match-foot"><span style="font-size:11px;color:#aaa">Tu pronóstico</span><button class="btn-save" onclick="savePrediction(${m.id})">Guardar</button></div>`:""}
+      </div>`;
     });
   });
-
-  if(!allMatches.length){
-    h=`<div class="empty"><div class="ic">📅</div><p>No hay partidos disponibles aún.</p></div>`;
-  }
-
   el.innerHTML=h;
 }
 
@@ -1184,7 +866,6 @@ async function renderTabla(){
     el.innerHTML=`<div class="empty"><div class="ic">🏆</div><p>La tabla se mostrará cuando haya participantes con pronósticos.</p></div>`;
     return;
   }
-  const email=user.email;
   const countryFlags={Chile:"🇨🇱",Colombia:"🇨🇴","México":"🇲🇽","Perú":"🇵🇪","España":"🇪🇸"};
   const medals=["🥇","🥈","🥉"];
   let h=`<div class="podium">`;
@@ -1204,8 +885,6 @@ async function renderTabla(){
   });
   h+=`</div>`;
   el.innerHTML=h;
-  // DEAD CODE REPLACED — original local calc below removed
-  const emails=Object.keys(allUsers);
 }
 
 function renderPremios(){
@@ -1235,130 +914,65 @@ function switchTab(name){
   });
   document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
   document.getElementById("panel-"+name).classList.add("active");
-  if(name==="tabla"){mergeResults().then(()=>renderTabla());}
+  if(name==="tabla"){renderTabla();}
   if(name==="bracket"){loadBracket();}
   if(name==="fixture"){mergeResults().then(()=>renderFixture());}
   if(name==="fixture"&&!allMatches.length)loadMatches();
 }
 
 const TLA={MEX:"🇲🇽",COL:"🇨🇴",PER:"🇵🇪",ARG:"🇦🇷",BRA:"🇧🇷",ESP:"🇪🇸",FRA:"🇫🇷",POR:"🇵🇹",GER:"🇩🇪",ENG:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",USA:"🇺🇸",ECU:"🇪🇨",URU:"🇺🇾",MAR:"🇲🇦",SEN:"🇸🇳",GHA:"🇬🇭",JPN:"🇯🇵",KOR:"🇰🇷",NED:"🇳🇱",BEL:"🇧🇪",CRO:"🇭🇷",SUI:"🇨🇭",DEN:"🇩🇰",POL:"🇵🇱"};
-function tlaFlag(tla){return "";}
+function tlaFlag(tla){return TLA[tla]||"🌍";}
 
 function demoMatches(){
-  // Fixture oficial FIFA World Cup 2026
   return [
-    // GRUPO A — México, Sudáfrica, Chequia, Corea del Sur
-    {id:1,  date:"2026-06-11T18:00:00Z", group:"Grupo A", homeTeam:"México",       homeFlag:"🇲🇽", awayTeam:"Sudáfrica",    awayFlag:"🇿🇦", status:"demo-open", score:{}},
-    {id:2,  date:"2026-06-11T22:00:00Z", group:"Grupo A", homeTeam:"Chequia",       homeFlag:"🇨🇿", awayTeam:"Corea del Sur",awayFlag:"🇰🇷", status:"demo-open", score:{}},
-    {id:3,  date:"2026-06-15T18:00:00Z", group:"Grupo A", homeTeam:"México",       homeFlag:"🇲🇽", awayTeam:"Chequia",      awayFlag:"🇨🇿", status:"demo-open", score:{}},
-    {id:4,  date:"2026-06-15T22:00:00Z", group:"Grupo A", homeTeam:"Sudáfrica",    homeFlag:"🇿🇦", awayTeam:"Corea del Sur",awayFlag:"🇰🇷", status:"demo-open", score:{}},
-    {id:5,  date:"2026-06-19T22:00:00Z", group:"Grupo A", homeTeam:"México",       homeFlag:"🇲🇽", awayTeam:"Corea del Sur",awayFlag:"🇰🇷", status:"demo-open", score:{}},
-    {id:6,  date:"2026-06-19T22:00:00Z", group:"Grupo A", homeTeam:"Sudáfrica",    homeFlag:"🇿🇦", awayTeam:"Chequia",      awayFlag:"🇨🇿", status:"demo-open", score:{}},
-    // GRUPO B — Estados Unidos, Australia, Paraguay, Turquía
-    {id:7,  date:"2026-06-12T19:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Paraguay",     awayFlag:"🇵🇾", status:"demo-open", score:{}},
-    {id:8,  date:"2026-06-12T22:00:00Z", group:"Grupo B", homeTeam:"Australia",    homeFlag:"🇦🇺", awayTeam:"Turquía",      awayFlag:"🇹🇷", status:"demo-open", score:{}},
-    {id:9,  date:"2026-06-16T19:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Australia",    awayFlag:"🇦🇺", status:"demo-open", score:{}},
-    {id:10, date:"2026-06-16T22:00:00Z", group:"Grupo B", homeTeam:"Paraguay",     homeFlag:"🇵🇾", awayTeam:"Turquía",      awayFlag:"🇹🇷", status:"demo-open", score:{}},
-    {id:11, date:"2026-06-20T22:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Turquía",      awayFlag:"🇹🇷", status:"demo-open", score:{}},
-    {id:12, date:"2026-06-20T22:00:00Z", group:"Grupo B", homeTeam:"Australia",    homeFlag:"🇦🇺", awayTeam:"Paraguay",     awayFlag:"🇵🇾", status:"demo-open", score:{}},
-    // GRUPO C — Canadá, Bosnia y Herz., Nueva Zelanda, Bélgica
-    {id:13, date:"2026-06-12T15:00:00Z", group:"Grupo C", homeTeam:"Canadá",       homeFlag:"🇨🇦", awayTeam:"Bosnia y Herz.",awayFlag:"🇧🇦", status:"demo-open", score:{}},
-    {id:14, date:"2026-06-13T01:00:00Z", group:"Grupo C", homeTeam:"Nueva Zelanda",homeFlag:"🇳🇿", awayTeam:"Bélgica",      awayFlag:"🇧🇪", status:"demo-open", score:{}},
-    {id:15, date:"2026-06-17T01:00:00Z", group:"Grupo C", homeTeam:"Canadá",       homeFlag:"🇨🇦", awayTeam:"Nueva Zelanda",awayFlag:"🇳🇿", status:"demo-open", score:{}},
-    {id:16, date:"2026-06-17T22:00:00Z", group:"Grupo C", homeTeam:"Bosnia y Herz.",homeFlag:"🇧🇦", awayTeam:"Bélgica",     awayFlag:"🇧🇪", status:"demo-open", score:{}},
-    {id:17, date:"2026-06-21T22:00:00Z", group:"Grupo C", homeTeam:"Canadá",       homeFlag:"🇨🇦", awayTeam:"Bélgica",      awayFlag:"🇧🇪", status:"demo-open", score:{}},
-    {id:18, date:"2026-06-21T22:00:00Z", group:"Grupo C", homeTeam:"Bosnia y Herz.",homeFlag:"🇧🇦", awayTeam:"Nueva Zelanda",awayFlag:"🇳🇿", status:"demo-open", score:{}},
-    // GRUPO D — Brasil, Marruecos, Croacia, Japón
-    {id:19, date:"2026-06-13T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",       homeFlag:"🇧🇷", awayTeam:"Croacia",      awayFlag:"🇭🇷", status:"demo-open", score:{}},
-    {id:20, date:"2026-06-13T22:00:00Z", group:"Grupo D", homeTeam:"Marruecos",    homeFlag:"🇲🇦", awayTeam:"Japón",        awayFlag:"🇯🇵", status:"demo-open", score:{}},
-    {id:21, date:"2026-06-17T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",       homeFlag:"🇧🇷", awayTeam:"Marruecos",    awayFlag:"🇲🇦", status:"demo-open", score:{}},
-    {id:22, date:"2026-06-17T22:00:00Z", group:"Grupo D", homeTeam:"Croacia",      homeFlag:"🇭🇷", awayTeam:"Japón",        awayFlag:"🇯🇵", status:"demo-open", score:{}},
-    {id:23, date:"2026-06-21T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",       homeFlag:"🇧🇷", awayTeam:"Japón",        awayFlag:"🇯🇵", status:"demo-open", score:{}},
-    {id:24, date:"2026-06-21T18:00:00Z", group:"Grupo D", homeTeam:"Marruecos",    homeFlag:"🇲🇦", awayTeam:"Croacia",      awayFlag:"🇭🇷", status:"demo-open", score:{}},
-    // GRUPO E — España, Serbia, Estonia, Costa Rica  
-    {id:25, date:"2026-06-14T18:00:00Z", group:"Grupo E", homeTeam:"España",       homeFlag:"🇪🇸", awayTeam:"Serbia",       awayFlag:"🇷🇸", status:"demo-open", score:{}},
-    {id:26, date:"2026-06-14T22:00:00Z", group:"Grupo E", homeTeam:"Estonia",      homeFlag:"🇪🇪", awayTeam:"Costa Rica",   awayFlag:"🇨🇷", status:"demo-open", score:{}},
-    {id:27, date:"2026-06-18T18:00:00Z", group:"Grupo E", homeTeam:"España",       homeFlag:"🇪🇸", awayTeam:"Estonia",      awayFlag:"🇪🇪", status:"demo-open", score:{}},
-    {id:28, date:"2026-06-18T22:00:00Z", group:"Grupo E", homeTeam:"Serbia",       homeFlag:"🇷🇸", awayTeam:"Costa Rica",   awayFlag:"🇨🇷", status:"demo-open", score:{}},
-    {id:29, date:"2026-06-22T22:00:00Z", group:"Grupo E", homeTeam:"España",       homeFlag:"🇪🇸", awayTeam:"Costa Rica",   awayFlag:"🇨🇷", status:"demo-open", score:{}},
-    {id:30, date:"2026-06-22T22:00:00Z", group:"Grupo E", homeTeam:"Serbia",       homeFlag:"🇷🇸", awayTeam:"Estonia",      awayFlag:"🇪🇪", status:"demo-open", score:{}},
-    // GRUPO F — Francia, Argentina, Arabia Saudí, Nigeria
-    {id:31, date:"2026-06-14T15:00:00Z", group:"Grupo F", homeTeam:"Francia",      homeFlag:"🇫🇷", awayTeam:"Nigeria",      awayFlag:"🇳🇬", status:"demo-open", score:{}},
-    {id:32, date:"2026-06-15T01:00:00Z", group:"Grupo F", homeTeam:"Argentina",    homeFlag:"🇦🇷", awayTeam:"Arabia Saudí", awayFlag:"🇸🇦", status:"demo-open", score:{}},
-    {id:33, date:"2026-06-18T15:00:00Z", group:"Grupo F", homeTeam:"Francia",      homeFlag:"🇫🇷", awayTeam:"Arabia Saudí", awayFlag:"🇸🇦", status:"demo-open", score:{}},
-    {id:34, date:"2026-06-19T01:00:00Z", group:"Grupo F", homeTeam:"Argentina",    homeFlag:"🇦🇷", awayTeam:"Nigeria",      awayFlag:"🇳🇬", status:"demo-open", score:{}},
-    {id:35, date:"2026-06-23T22:00:00Z", group:"Grupo F", homeTeam:"Francia",      homeFlag:"🇫🇷", awayTeam:"Argentina",    awayFlag:"🇦🇷", status:"demo-open", score:{}},
-    {id:36, date:"2026-06-23T22:00:00Z", group:"Grupo F", homeTeam:"Arabia Saudí", homeFlag:"🇸🇦", awayTeam:"Nigeria",      awayFlag:"🇳🇬", status:"demo-open", score:{}},
-    // GRUPO G — Portugal, Colombia, Escocia, Egipto
-    {id:37, date:"2026-06-15T15:00:00Z", group:"Grupo G", homeTeam:"Portugal",     homeFlag:"🇵🇹", awayTeam:"Escocia",      awayFlag:"🏴", status:"demo-open", score:{}},
-    {id:38, date:"2026-06-15T22:00:00Z", group:"Grupo G", homeTeam:"Colombia",     homeFlag:"🇨🇴", awayTeam:"Egipto",       awayFlag:"🇪🇬", status:"demo-open", score:{}},
-    {id:39, date:"2026-06-19T15:00:00Z", group:"Grupo G", homeTeam:"Portugal",     homeFlag:"🇵🇹", awayTeam:"Colombia",     awayFlag:"🇨🇴", status:"demo-open", score:{}},
-    {id:40, date:"2026-06-19T22:00:00Z", group:"Grupo G", homeTeam:"Escocia",      homeFlag:"🏴", awayTeam:"Egipto",        awayFlag:"🇪🇬", status:"demo-open", score:{}},
-    {id:41, date:"2026-06-23T18:00:00Z", group:"Grupo G", homeTeam:"Portugal",     homeFlag:"🇵🇹", awayTeam:"Egipto",       awayFlag:"🇪🇬", status:"demo-open", score:{}},
-    {id:42, date:"2026-06-23T18:00:00Z", group:"Grupo G", homeTeam:"Colombia",     homeFlag:"🇨🇴", awayTeam:"Escocia",      awayFlag:"🏴", status:"demo-open", score:{}},
-    // GRUPO H — Alemania, Uruguay, Perú, Senegal
-    {id:43, date:"2026-06-16T15:00:00Z", group:"Grupo H", homeTeam:"Alemania",     homeFlag:"🇩🇪", awayTeam:"Perú",         awayFlag:"🇵🇪", status:"demo-open", score:{}},
-    {id:44, date:"2026-06-16T22:00:00Z", group:"Grupo H", homeTeam:"Uruguay",      homeFlag:"🇺🇾", awayTeam:"Senegal",      awayFlag:"🇸🇳", status:"demo-open", score:{}},
-    {id:45, date:"2026-06-20T15:00:00Z", group:"Grupo H", homeTeam:"Alemania",     homeFlag:"🇩🇪", awayTeam:"Uruguay",      awayFlag:"🇺🇾", status:"demo-open", score:{}},
-    {id:46, date:"2026-06-20T22:00:00Z", group:"Grupo H", homeTeam:"Perú",         homeFlag:"🇵🇪", awayTeam:"Senegal",      awayFlag:"🇸🇳", status:"demo-open", score:{}},
-    {id:47, date:"2026-06-24T22:00:00Z", group:"Grupo H", homeTeam:"Alemania",     homeFlag:"🇩🇪", awayTeam:"Senegal",      awayFlag:"🇸🇳", status:"demo-open", score:{}},
-    {id:48, date:"2026-06-24T22:00:00Z", group:"Grupo H", homeTeam:"Uruguay",      homeFlag:"🇺🇾", awayTeam:"Perú",         awayFlag:"🇵🇪", status:"demo-open", score:{}},
-  ];
-}},
-    {id:2, date:"2026-06-12T01:00:00Z", group:"Grupo A", homeTeam:"Uruguay",     awayTeam:"Senegal",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:3, date:"2026-06-16T22:00:00Z", group:"Grupo A", homeTeam:"México",      awayTeam:"Uruguay",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:4, date:"2026-06-16T18:00:00Z", group:"Grupo A", homeTeam:"Ecuador",     awayTeam:"Senegal",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:5, date:"2026-06-20T22:00:00Z", group:"Grupo A", homeTeam:"México",      awayTeam:"Senegal",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:6, date:"2026-06-20T22:00:00Z", group:"Grupo A", homeTeam:"Ecuador",     awayTeam:"Uruguay",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO B
-    {id:7, date:"2026-06-12T18:00:00Z", group:"Grupo B", homeTeam:"Argentina",   awayTeam:"Guinea",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:8, date:"2026-06-12T22:00:00Z", group:"Grupo B", homeTeam:"Marruecos",   awayTeam:"Portugal",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:9, date:"2026-06-17T01:00:00Z", group:"Grupo B", homeTeam:"Argentina",   awayTeam:"Marruecos",     homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:10,date:"2026-06-17T18:00:00Z", group:"Grupo B", homeTeam:"Guinea",      awayTeam:"Portugal",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:11,date:"2026-06-21T22:00:00Z", group:"Grupo B", homeTeam:"Argentina",   awayTeam:"Portugal",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:12,date:"2026-06-21T22:00:00Z", group:"Grupo B", homeTeam:"Guinea",      awayTeam:"Marruecos",     homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO C
-    {id:13,date:"2026-06-13T01:00:00Z", group:"Grupo C", homeTeam:"Estados Unidos",awayTeam:"Panamá",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:14,date:"2026-06-13T18:00:00Z", group:"Grupo C", homeTeam:"Dinamarca",   awayTeam:"Serbia",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:15,date:"2026-06-17T22:00:00Z", group:"Grupo C", homeTeam:"Estados Unidos",awayTeam:"Dinamarca",   homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:16,date:"2026-06-18T01:00:00Z", group:"Grupo C", homeTeam:"Panamá",      awayTeam:"Serbia",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:17,date:"2026-06-22T22:00:00Z", group:"Grupo C", homeTeam:"Estados Unidos",awayTeam:"Serbia",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:18,date:"2026-06-22T22:00:00Z", group:"Grupo C", homeTeam:"Panamá",      awayTeam:"Dinamarca",     homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO D
-    {id:19,date:"2026-06-13T22:00:00Z", group:"Grupo D", homeTeam:"Brasil",      awayTeam:"Croacia",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:20,date:"2026-06-14T01:00:00Z", group:"Grupo D", homeTeam:"Japón",       awayTeam:"Alemania",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:21,date:"2026-06-18T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",      awayTeam:"Japón",         homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:22,date:"2026-06-18T22:00:00Z", group:"Grupo D", homeTeam:"Croacia",     awayTeam:"Alemania",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:23,date:"2026-06-22T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",      awayTeam:"Alemania",      homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:24,date:"2026-06-22T18:00:00Z", group:"Grupo D", homeTeam:"Japón",       awayTeam:"Croacia",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO E
-    {id:25,date:"2026-06-14T18:00:00Z", group:"Grupo E", homeTeam:"Francia",     awayTeam:"Albania",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:26,date:"2026-06-14T22:00:00Z", group:"Grupo E", homeTeam:"España",      awayTeam:"Uzbekistán",    homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:27,date:"2026-06-19T01:00:00Z", group:"Grupo E", homeTeam:"Francia",     awayTeam:"España",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:28,date:"2026-06-18T18:00:00Z", group:"Grupo E", homeTeam:"Albania",     awayTeam:"Uzbekistán",    homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:29,date:"2026-06-23T22:00:00Z", group:"Grupo E", homeTeam:"Francia",     awayTeam:"Uzbekistán",    homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:30,date:"2026-06-23T22:00:00Z", group:"Grupo E", homeTeam:"España",      awayTeam:"Albania",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO F
-    {id:31,date:"2026-06-15T01:00:00Z", group:"Grupo F", homeTeam:"Colombia",    awayTeam:"Kenia",         homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:32,date:"2026-06-15T18:00:00Z", group:"Grupo F", homeTeam:"Alemania Occ.",awayTeam:"Costa Rica",   homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:33,date:"2026-06-19T18:00:00Z", group:"Grupo F", homeTeam:"Colombia",    awayTeam:"Alemania Occ.", homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:34,date:"2026-06-19T22:00:00Z", group:"Grupo F", homeTeam:"Kenia",       awayTeam:"Costa Rica",    homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:35,date:"2026-06-23T18:00:00Z", group:"Grupo F", homeTeam:"Colombia",    awayTeam:"Costa Rica",    homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:36,date:"2026-06-23T18:00:00Z", group:"Grupo F", homeTeam:"Kenia",       awayTeam:"Alemania Occ.", homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO G
-    {id:37,date:"2026-06-15T22:00:00Z", group:"Grupo G", homeTeam:"Portugal",    awayTeam:"Angola",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:38,date:"2026-06-16T01:00:00Z", group:"Grupo G", homeTeam:"Hungría",     awayTeam:"Escocia",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:39,date:"2026-06-20T01:00:00Z", group:"Grupo G", homeTeam:"Portugal",    awayTeam:"Hungría",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:40,date:"2026-06-19T22:00:00Z", group:"Grupo G", homeTeam:"Angola",      awayTeam:"Escocia",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:41,date:"2026-06-24T22:00:00Z", group:"Grupo G", homeTeam:"Portugal",    awayTeam:"Escocia",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:42,date:"2026-06-24T22:00:00Z", group:"Grupo G", homeTeam:"Angola",      awayTeam:"Hungría",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    // GRUPO H
-    {id:43,date:"2026-06-16T18:00:00Z", group:"Grupo H", homeTeam:"Bélgica",     awayTeam:"Ucrania",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:44,date:"2026-06-16T22:00:00Z", group:"Grupo H", homeTeam:"Italia",      awayTeam:"Ecuador",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:45,date:"2026-06-20T18:00:00Z", group:"Grupo H", homeTeam:"Bélgica",     awayTeam:"Italia",        homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:46,date:"2026-06-20T22:00:00Z", group:"Grupo H", homeTeam:"Ucrania",     awayTeam:"Ecuador",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:47,date:"2026-06-24T18:00:00Z", group:"Grupo H", homeTeam:"Bélgica",     awayTeam:"Ecuador",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
-    {id:48,date:"2026-06-24T18:00:00Z", group:"Grupo H", homeTeam:"Italia",      awayTeam:"Ucrania",       homeFlag:"", awayFlag:"", status:"demo-open", score:{}},
+    {id:1,  date:"2026-06-11T18:00:00Z", group:"Grupo A", homeTeam:"México",        homeFlag:"🇲🇽", awayTeam:"Sudáfrica",     awayFlag:"🇿🇦", status:"demo-open", score:{}},
+    {id:2,  date:"2026-06-11T22:00:00Z", group:"Grupo A", homeTeam:"Chequia",        homeFlag:"🇨🇿", awayTeam:"Corea del Sur", awayFlag:"🇰🇷", status:"demo-open", score:{}},
+    {id:3,  date:"2026-06-15T18:00:00Z", group:"Grupo A", homeTeam:"México",        homeFlag:"🇲🇽", awayTeam:"Chequia",       awayFlag:"🇨🇿", status:"demo-open", score:{}},
+    {id:4,  date:"2026-06-15T22:00:00Z", group:"Grupo A", homeTeam:"Sudáfrica",     homeFlag:"🇿🇦", awayTeam:"Corea del Sur", awayFlag:"🇰🇷", status:"demo-open", score:{}},
+    {id:5,  date:"2026-06-19T22:00:00Z", group:"Grupo A", homeTeam:"México",        homeFlag:"🇲🇽", awayTeam:"Corea del Sur", awayFlag:"🇰🇷", status:"demo-open", score:{}},
+    {id:6,  date:"2026-06-19T22:00:00Z", group:"Grupo A", homeTeam:"Sudáfrica",     homeFlag:"🇿🇦", awayTeam:"Chequia",       awayFlag:"🇨🇿", status:"demo-open", score:{}},
+    {id:7,  date:"2026-06-12T19:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Paraguay",      awayFlag:"🇵🇾", status:"demo-open", score:{}},
+    {id:8,  date:"2026-06-12T22:00:00Z", group:"Grupo B", homeTeam:"Australia",     homeFlag:"🇦🇺", awayTeam:"Turquía",       awayFlag:"🇹🇷", status:"demo-open", score:{}},
+    {id:9,  date:"2026-06-16T19:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Australia",     awayFlag:"🇦🇺", status:"demo-open", score:{}},
+    {id:10, date:"2026-06-16T22:00:00Z", group:"Grupo B", homeTeam:"Paraguay",      homeFlag:"🇵🇾", awayTeam:"Turquía",       awayFlag:"🇹🇷", status:"demo-open", score:{}},
+    {id:11, date:"2026-06-20T22:00:00Z", group:"Grupo B", homeTeam:"Estados Unidos",homeFlag:"🇺🇸", awayTeam:"Turquía",       awayFlag:"🇹🇷", status:"demo-open", score:{}},
+    {id:12, date:"2026-06-20T22:00:00Z", group:"Grupo B", homeTeam:"Australia",     homeFlag:"🇦🇺", awayTeam:"Paraguay",      awayFlag:"🇵🇾", status:"demo-open", score:{}},
+    {id:13, date:"2026-06-12T15:00:00Z", group:"Grupo C", homeTeam:"Canadá",        homeFlag:"🇨🇦", awayTeam:"Bosnia y Herz.",awayFlag:"🇧🇦", status:"demo-open", score:{}},
+    {id:14, date:"2026-06-13T01:00:00Z", group:"Grupo C", homeTeam:"Nueva Zelanda", homeFlag:"🇳🇿", awayTeam:"Bélgica",       awayFlag:"🇧🇪", status:"demo-open", score:{}},
+    {id:15, date:"2026-06-17T01:00:00Z", group:"Grupo C", homeTeam:"Canadá",        homeFlag:"🇨🇦", awayTeam:"Nueva Zelanda", awayFlag:"🇳🇿", status:"demo-open", score:{}},
+    {id:16, date:"2026-06-17T22:00:00Z", group:"Grupo C", homeTeam:"Bosnia y Herz.",homeFlag:"🇧🇦", awayTeam:"Bélgica",       awayFlag:"🇧🇪", status:"demo-open", score:{}},
+    {id:17, date:"2026-06-21T22:00:00Z", group:"Grupo C", homeTeam:"Canadá",        homeFlag:"🇨🇦", awayTeam:"Bélgica",       awayFlag:"🇧🇪", status:"demo-open", score:{}},
+    {id:18, date:"2026-06-21T22:00:00Z", group:"Grupo C", homeTeam:"Bosnia y Herz.",homeFlag:"🇧🇦", awayTeam:"Nueva Zelanda", awayFlag:"🇳🇿", status:"demo-open", score:{}},
+    {id:19, date:"2026-06-13T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",        homeFlag:"🇧🇷", awayTeam:"Croacia",       awayFlag:"🇭🇷", status:"demo-open", score:{}},
+    {id:20, date:"2026-06-13T22:00:00Z", group:"Grupo D", homeTeam:"Marruecos",     homeFlag:"🇲🇦", awayTeam:"Japón",         awayFlag:"🇯🇵", status:"demo-open", score:{}},
+    {id:21, date:"2026-06-17T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",        homeFlag:"🇧🇷", awayTeam:"Marruecos",     awayFlag:"🇲🇦", status:"demo-open", score:{}},
+    {id:22, date:"2026-06-17T22:00:00Z", group:"Grupo D", homeTeam:"Croacia",       homeFlag:"🇭🇷", awayTeam:"Japón",         awayFlag:"🇯🇵", status:"demo-open", score:{}},
+    {id:23, date:"2026-06-21T18:00:00Z", group:"Grupo D", homeTeam:"Brasil",        homeFlag:"🇧🇷", awayTeam:"Japón",         awayFlag:"🇯🇵", status:"demo-open", score:{}},
+    {id:24, date:"2026-06-21T18:00:00Z", group:"Grupo D", homeTeam:"Marruecos",     homeFlag:"🇲🇦", awayTeam:"Croacia",       awayFlag:"🇭🇷", status:"demo-open", score:{}},
+    {id:25, date:"2026-06-14T18:00:00Z", group:"Grupo E", homeTeam:"España",        homeFlag:"🇪🇸", awayTeam:"Serbia",        awayFlag:"🇷🇸", status:"demo-open", score:{}},
+    {id:26, date:"2026-06-14T22:00:00Z", group:"Grupo E", homeTeam:"Estonia",       homeFlag:"🇪🇪", awayTeam:"Costa Rica",    awayFlag:"🇨🇷", status:"demo-open", score:{}},
+    {id:27, date:"2026-06-18T18:00:00Z", group:"Grupo E", homeTeam:"España",        homeFlag:"🇪🇸", awayTeam:"Estonia",       awayFlag:"🇪🇪", status:"demo-open", score:{}},
+    {id:28, date:"2026-06-18T22:00:00Z", group:"Grupo E", homeTeam:"Serbia",        homeFlag:"🇷🇸", awayTeam:"Costa Rica",    awayFlag:"🇨🇷", status:"demo-open", score:{}},
+    {id:29, date:"2026-06-22T22:00:00Z", group:"Grupo E", homeTeam:"España",        homeFlag:"🇪🇸", awayTeam:"Costa Rica",    awayFlag:"🇨🇷", status:"demo-open", score:{}},
+    {id:30, date:"2026-06-22T22:00:00Z", group:"Grupo E", homeTeam:"Serbia",        homeFlag:"🇷🇸", awayTeam:"Estonia",       awayFlag:"🇪🇪", status:"demo-open", score:{}},
+    {id:31, date:"2026-06-14T15:00:00Z", group:"Grupo F", homeTeam:"Francia",       homeFlag:"🇫🇷", awayTeam:"Nigeria",       awayFlag:"🇳🇬", status:"demo-open", score:{}},
+    {id:32, date:"2026-06-15T01:00:00Z", group:"Grupo F", homeTeam:"Argentina",     homeFlag:"🇦🇷", awayTeam:"Arabia Saudí",  awayFlag:"🇸🇦", status:"demo-open", score:{}},
+    {id:33, date:"2026-06-18T15:00:00Z", group:"Grupo F", homeTeam:"Francia",       homeFlag:"🇫🇷", awayTeam:"Arabia Saudí",  awayFlag:"🇸🇦", status:"demo-open", score:{}},
+    {id:34, date:"2026-06-19T01:00:00Z", group:"Grupo F", homeTeam:"Argentina",     homeFlag:"🇦🇷", awayTeam:"Nigeria",       awayFlag:"🇳🇬", status:"demo-open", score:{}},
+    {id:35, date:"2026-06-23T22:00:00Z", group:"Grupo F", homeTeam:"Francia",       homeFlag:"🇫🇷", awayTeam:"Argentina",     awayFlag:"🇦🇷", status:"demo-open", score:{}},
+    {id:36, date:"2026-06-23T22:00:00Z", group:"Grupo F", homeTeam:"Arabia Saudí",  homeFlag:"🇸🇦", awayTeam:"Nigeria",       awayFlag:"🇳🇬", status:"demo-open", score:{}},
+    {id:37, date:"2026-06-15T15:00:00Z", group:"Grupo G", homeTeam:"Portugal",      homeFlag:"🇵🇹", awayTeam:"Escocia",       awayFlag:"🏴", status:"demo-open", score:{}},
+    {id:38, date:"2026-06-15T22:00:00Z", group:"Grupo G", homeTeam:"Colombia",      homeFlag:"🇨🇴", awayTeam:"Egipto",        awayFlag:"🇪🇬", status:"demo-open", score:{}},
+    {id:39, date:"2026-06-19T15:00:00Z", group:"Grupo G", homeTeam:"Portugal",      homeFlag:"🇵🇹", awayTeam:"Colombia",      awayFlag:"🇨🇴", status:"demo-open", score:{}},
+    {id:40, date:"2026-06-19T22:00:00Z", group:"Grupo G", homeTeam:"Escocia",       homeFlag:"🏴", awayTeam:"Egipto",         awayFlag:"🇪🇬", status:"demo-open", score:{}},
+    {id:41, date:"2026-06-23T18:00:00Z", group:"Grupo G", homeTeam:"Portugal",      homeFlag:"🇵🇹", awayTeam:"Egipto",        awayFlag:"🇪🇬", status:"demo-open", score:{}},
+    {id:42, date:"2026-06-23T18:00:00Z", group:"Grupo G", homeTeam:"Colombia",      homeFlag:"🇨🇴", awayTeam:"Escocia",       awayFlag:"🏴", status:"demo-open", score:{}},
+    {id:43, date:"2026-06-16T15:00:00Z", group:"Grupo H", homeTeam:"Alemania",      homeFlag:"🇩🇪", awayTeam:"Perú",          awayFlag:"🇵🇪", status:"demo-open", score:{}},
+    {id:44, date:"2026-06-16T22:00:00Z", group:"Grupo H", homeTeam:"Uruguay",       homeFlag:"🇺🇾", awayTeam:"Senegal",       awayFlag:"🇸🇳", status:"demo-open", score:{}},
+    {id:45, date:"2026-06-20T15:00:00Z", group:"Grupo H", homeTeam:"Alemania",      homeFlag:"🇩🇪", awayTeam:"Uruguay",       awayFlag:"🇺🇾", status:"demo-open", score:{}},
+    {id:46, date:"2026-06-20T22:00:00Z", group:"Grupo H", homeTeam:"Perú",          homeFlag:"🇵🇪", awayTeam:"Senegal",       awayFlag:"🇸🇳", status:"demo-open", score:{}},
+    {id:47, date:"2026-06-24T22:00:00Z", group:"Grupo H", homeTeam:"Alemania",      homeFlag:"🇩🇪", awayTeam:"Senegal",       awayFlag:"🇸🇳", status:"demo-open", score:{}},
+    {id:48, date:"2026-06-24T22:00:00Z", group:"Grupo H", homeTeam:"Uruguay",       homeFlag:"🇺🇾", awayTeam:"Perú",          awayFlag:"🇵🇪", status:"demo-open", score:{}},
   ];
 }
 </script>
