@@ -799,10 +799,8 @@ async function saveKnockoutPred(matchId, matchDate){
 }
 
 // Include knockout pts in total
-const _getUserPtsOrig = getUserPts;
-function getUserPts(email){
-  let pts = _getUserPtsOrig(email);
-  // Add knockout pts
+function getUserPtsTotal(email){
+  let pts = getUserPts(email);
   knockoutMatches.forEach(m=>{
     const pred = (email===user?.email ? knockoutPreds : {})[m.id];
     if(pred && m.status==='FINISHED'){
